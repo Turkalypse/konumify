@@ -84,7 +84,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/credentials.json"
 
 ## Sorun giderme
 - Google API anahtarlarınızın ve kimlik bilgilerinizin doğru bir şekilde ayarlandığından emin olun.
-- Uygulama konum tespiti yapamazsa, görüntünün net bir metin veya tanınabilir bir yer olduğundan emin olun. Proje yeni olduğu için ilk sürümde elimden geleni yaptım. İyileştirmeler zamanla gelecektir.
+- Uygulama henüz konum tespiti yapamayabilir ve benzerlik olduğu için yanlış konum tespiti yapabilir. Projem yeni. İyileştirmeler zamanla gelecektir.
 
 ## Lisans
 Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
