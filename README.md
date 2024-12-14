@@ -60,7 +60,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/credentials.json"
 ## Başlatma
 1. Depoyu cihazınıza klonlayın:
    ```bash
-   git clone https://github.com/Turkalypse/konumify.git
+   git clone https://github.com/Turkalypse/konumify-test.git
    cd konumify
    ```
 2. Başlatın:
