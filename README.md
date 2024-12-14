@@ -72,19 +72,19 @@ export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/credentials.json"
 ## Dizin yapısı
 ```
 /project-directory
-    /uploads             # Yüklenmiş görüntüler için geçici depolama alanı
-    app.py               # Ana Flask uygulama dosyası
+    /uploads             # Yüklenmiş görüntüler için geçici depolama alanı (otomatik oluşturulur)
+    app.py               # Ana dosya
     /templates
         index.html       # Ana sayfa şablonu
         result.html      # Görüntü analizi sonuçlarını gösteren şablon
     /static
-        style.css         # Opsiyonel stil dosyası
-    requirements.txt      # Python bağlımlıkları listesi
+        style.css         # Stil dosyası
+    requirements.txt      # Python paketleri listesi
 ```
 
 ## Sorun giderme
 - Google API anahtarlarınızın ve kimlik bilgilerinizin doğru bir şekilde ayarlandığından emin olun.
-- Uygulama konum tespiti yapamazsa, görüntünün net bir metin veya tanınabilir bir yer işareti içerdiğinden emin olun.
+- Uygulama konum tespiti yapamazsa, görüntünün net bir metin veya tanınabilir bir yer olduğundan emin olun. Proje yeni olduğu için ilk sürümde elimden geleni yaptım. İyileştirmeler zamanla gelecektir.
 
 ## Lisans
 Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
