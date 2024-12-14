@@ -1,4 +1,4 @@
-# Konumify
+# ![KonumifyLogosu](https://i.ibb.co/f1FJgSF/konumifywhite.png)
 
 Bu proje, EXIF meta verileri, OCR (Optik Karakter Tanıma) ve Google API'leriyle birlikte görüntü analizi ve konum tespiti yapar.
 
@@ -60,8 +60,8 @@ export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/credentials.json"
 ## Başlatma
 1. Depoyu cihazınıza klonlayın:
    ```bash
-   git clone https://github.com/yourusername/yourproject.git
-   cd yourproject
+   git clone https://github.com/Turkalypse/konumify.git
+   cd konumify
    ```
 2. Başlatın:
    ```bash
