@@ -1,0 +1,6 @@
+Flask
+google-cloud-vision
+requests
+spacy
+pillow
+werkzeug
