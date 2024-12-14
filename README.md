@@ -90,6 +90,8 @@ export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/credentials.json"
 ## Lisans
 Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
+## Örnek sonuç:
+
 # ![KonumifyIndex](https://i.ibb.co/0CVZQNJ/image.jpg)
 # ![KonumifyIndex](https://i.ibb.co/J5x6qzD/index.png)
 # ![KonumifyResult](https://i.ibb.co/vBgcZbj/result.png)
