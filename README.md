@@ -85,7 +85,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/credentials.json"
 ## Sorun giderme
 - Google API anahtarlarınızın ve kimlik bilgilerinizin doğru bir şekilde ayarlandığından emin olun.
 - Uygulama henüz konum tespiti yapamayabilir ve benzerlik olduğu için yanlış konum tespiti yapabilir. Projem henüz yeni. İyileştirmeler zamanla yapılacaktır.
-- Yakında nasıl kurulur ve kullanılır gibisinden rehber videosu eklenecektir.
+- Yakında 'nasıl kurulur ve nasıl kullanılır' gibisinden rehber videosu eklenecektir.
 
 ## Lisans
 Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
