@@ -12,9 +12,9 @@ Bu proje, EXIF meta verileri, OCR (Optik Karakter Tanıma) ve Google API'leriyle
 - **Amaç**: GPS koordinatlarından (enlem ve boylam) adres bilgisi elde etmek için kullanılır.
 - **Dokümantasyon**: [Geocoding API Dokümantasyonu](https://developers.google.com/maps/documentation/geocoding/start)
 
-### 3. Google Places API
+### 3. Google Places (New) API
 - **Amaç**: Metin sorgusu veya yer kimliğinden (Place ID) yer detayları, adı, adresi ve coğrafi konumu almak için kullanılır.
-- **Dokümantasyon**: [Places API Dokümantasyonu](https://developers.google.com/maps/documentation/places/web-service/overview)
+- **Dokümantasyon**: [Places (New) API Dokümantasyonu](https://developers.google.com/maps/documentation/places/web-service/)
 
 ### 4. Google Maps Static API
 - **Amaç**: Coğrafi koordinatlara dayalı statik harita görüntüleri oluşturmak için kullanılır (uydu görüntüleri dahil).
