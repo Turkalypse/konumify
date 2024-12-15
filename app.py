@@ -21,7 +21,7 @@ VISION_CLIENT = vision.ImageAnnotatorClient()
 GEOCODING_API_KEY = 'GEOCODING_API_ANAHTARINIZ'
 PLACES_API_KEY = GEOCODING_API_KEY
 
-# Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır ve analiz tamamlanınca yer kaplamamak için silinir.
+# Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır ve analiz tamamlanınca yer kaplamamak için silinir
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
