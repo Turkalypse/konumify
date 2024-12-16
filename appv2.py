@@ -8,6 +8,7 @@ import requests
 import spacy
 from PIL import Image
 from PIL.ExifTags import TAGS
+from collections import Counter #
 
 nlp = spacy.load('en_core_web_sm')
 
@@ -42,7 +43,7 @@ def index():
         file.save(filepath)
 
         try:
-            # 1. EXIF verilerininin kontrolü
+            # 1. EXIF verilerinin kontrolü
             exif_data = extract_exif(filepath)
             if exif_data:
                 print("\033[92mEXIF yöntemi ile bulundu\033[0m")
@@ -71,12 +72,23 @@ def index():
 
             # 3. Vision API ile analiz
             vision_data = analyze_image(filepath)
-            if 'error' not in vision_data:
+            if 'error' not in vision_data and all(vision_data.get(key) is not None for key in ('latitude', 'longitude', 'address')):
                 print("\033[92mVision API yöntemi ile bulundu\033[0m")
                 satellite_image_url = get_satellite_image_url(vision_data['latitude'], vision_data['longitude'])
                 return render_template('result.html', place_info=vision_data, satellite_image_url=satellite_image_url)
             else:
                 print("\033[93mVision API ile yer bulma başarısız.\033[0m")
+                
+            # YENİ: Vision API sonuçları yetersizse Web Detection sürecini kullan
+            if any(vision_data.get(key) is None for key in ('description', 'latitude', 'longitude', 'address')):
+                print("\033[93mSonuçlar yetersiz, Web Detection işleme geçiliyor.\\033[0m")
+                vision_data_web = analyze_image_with_web_detection(filepath)
+                if 'error' not in vision_data_web:
+                    top_keywords = extract_top_keywords(vision_data_web)
+                    search_results = search_with_keywords(top_keywords)
+                    return render_template('result2.html', top_keywords=top_keywords, search_results=search_results)
+                else:
+                    print("\033[93mWeb Detection başarısız.\033[0m")
 
             print("\033[93mAnaliz tamamlandı ancak sonuç bulunamadı. Daha sade veya spesifik bir metin kullanmayı deneyin.\033[0m")
         finally:
@@ -85,6 +97,67 @@ def index():
 
     return render_template('index.html')
 
+# YENİ
+def analyze_image_with_web_detection(filepath):
+    try:
+        with io.open(filepath, 'rb') as image_file:
+            content = image_file.read()
+        image = vision.Image(content=content)
+
+        # Web Detection
+        response = VISION_CLIENT.web_detection(image=image)
+        web_entities = response.web_detection.web_entities
+        print("\033[94mWeb Detection Response:\033[0m", response)
+
+        if web_entities:
+            print("\033[92mWeb Entity Detection Successful\033[0m")
+            return {
+                'web_entities': web_entities
+            }
+
+        print("\033[93mWeb Detection'da hiçbir sonuç bulunamadı.\033[0m")
+        return {'error': 'Herhangi bir web varlığı tespit edilemedi'}
+
+    except Exception as e:
+        print(f"\033[91mVision API hatası:\033[0m {e}")
+        return {'error': 'Vision API ile analiz edilemedi'}
+
+def extract_top_keywords(vision_data):
+    web_entities = vision_data.get('web_entities', [])
+    text_data = " ".join([entity.description for entity in web_entities])
+
+    doc = nlp(text_data)
+    words = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+    word_counts = Counter(words)
+    top_keywords = [word for word, _ in word_counts.most_common(3)]
+
+    print(f"\033[94mEn çok geçen 3 kelime:\033[0m {top_keywords}")
+    return top_keywords
+
+def search_with_keywords(keywords):
+    results = []
+    try:
+        for keyword in keywords:
+            search_url = "https://www.googleapis.com/customsearch/v1"
+            params = {
+                'q': keyword,
+                'cx': 'c06054d0f86e8475f',
+                'key': GEOCODING_API_KEY,
+                'siteSearch': '.tr',
+            }
+            response = requests.get(search_url, params=params).json()
+            if 'items' in response:
+                for item in response['items'][:3]:  # İlk 3 sonucu al
+                    results.append({
+                        'title': item['title'],
+                        'url': item['link']
+                    })
+        print(f"\033[94mArama sonuçları:\033[0m {results}")
+    except Exception as e:
+        print(f"Google Search API hatası: {e}")
+    return results
+# YENİ bitiş
+    
 # EXIF verilerini çekme
 def extract_exif(filepath):
     try:
@@ -192,8 +265,7 @@ def analyze_image(filepath):
         if web_entities:
             primary_entity = max(web_entities, key=lambda e: e.score if e.description else 0)
             description = primary_entity.description if primary_entity and primary_entity.description else "Belirlenemedi"
-            lat, lng = None, None
-            address = None
+            lat, lng, address = None, None, None
 
             if description:
                 geocode_result = get_coordinates_from_description(description)
@@ -248,8 +320,14 @@ def analyze_image_with_ocr(filepath):
         image = vision.Image(content=content)
         response = VISION_CLIENT.text_detection(image=image)
         texts = response.text_annotations
+        
         if texts:
             detected_text = texts[0].description
+            
+            # Eğer algılanan metin 2 veya daha az karakter uzunluğundaysa, hemen çık
+            if len(detected_text) <= 2:
+                print("\033[93mAlgılanan metin 2 veya daha az karakter uzunluğunda, atlanıyor.\033[0m")
+                return {'error': 'Metin 2 veya daha az karakter uzunluğunda olduğu için geçersiz.'}
             
             # NLP uygulama
             doc = nlp(detected_text)
@@ -261,8 +339,8 @@ def analyze_image_with_ocr(filepath):
             entities = [(ent.text, ent.label_) for ent in doc.ents]
             print("\033[92mVarlıklar:\033[0m", entities)
 
-            # Anahtar kelimeleri bulma
-            keywords = set(token.lemma_ for token in doc if token.is_alpha and not token.is_stop)
+            # Anahtar kelimeleri bulma ve 2 veya daha az karakterli kelimeleri filtreleme
+            keywords = set(token.lemma_ for token in doc if token.is_alpha and not token.is_stop and len(token.lemma_) > 2)
             print("\033[92mAnahtar Kelimeler:\033[0m", keywords)
 
             return {'text': detected_text, 'cleaned_text': cleaned_text, 'entities': entities, 'keywords': list(keywords)}
