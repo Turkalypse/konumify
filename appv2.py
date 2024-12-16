@@ -79,7 +79,7 @@ def index():
             else:
                 print("\033[93mVision API ile yer bulma başarısız.\033[0m")
                 
-            # YENİ: Vision API sonuçları yetersizse Web Detection sürecini kullan
+            # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
             if any(vision_data.get(key) is None for key in ('description', 'latitude', 'longitude', 'address')):
                 print("\033[93mSonuçlar yetersiz, Web Detection işleme geçiliyor.\\033[0m")
                 vision_data_web = analyze_image_with_web_detection(filepath)
@@ -89,6 +89,7 @@ def index():
                     return render_template('result2.html', top_keywords=top_keywords, search_results=search_results)
                 else:
                     print("\033[93mWeb Detection başarısız.\033[0m")
+            # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
             print("\033[93mAnaliz tamamlandı ancak sonuç bulunamadı. Daha sade veya spesifik bir metin kullanmayı deneyin.\033[0m")
         finally:
@@ -97,67 +98,6 @@ def index():
 
     return render_template('index.html')
 
-# YENİ
-def analyze_image_with_web_detection(filepath):
-    try:
-        with io.open(filepath, 'rb') as image_file:
-            content = image_file.read()
-        image = vision.Image(content=content)
-
-        # Web Detection
-        response = VISION_CLIENT.web_detection(image=image)
-        web_entities = response.web_detection.web_entities
-        print("\033[94mWeb Detection Response:\033[0m", response)
-
-        if web_entities:
-            print("\033[92mWeb Entity Detection Successful\033[0m")
-            return {
-                'web_entities': web_entities
-            }
-
-        print("\033[93mWeb Detection'da hiçbir sonuç bulunamadı.\033[0m")
-        return {'error': 'Herhangi bir web varlığı tespit edilemedi'}
-
-    except Exception as e:
-        print(f"\033[91mVision API hatası:\033[0m {e}")
-        return {'error': 'Vision API ile analiz edilemedi'}
-
-def extract_top_keywords(vision_data):
-    web_entities = vision_data.get('web_entities', [])
-    text_data = " ".join([entity.description for entity in web_entities])
-
-    doc = nlp(text_data)
-    words = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
-    word_counts = Counter(words)
-    top_keywords = [word for word, _ in word_counts.most_common(3)]
-
-    print(f"\033[94mEn çok geçen 3 kelime:\033[0m {top_keywords}")
-    return top_keywords
-
-def search_with_keywords(keywords):
-    results = []
-    try:
-        for keyword in keywords:
-            search_url = "https://www.googleapis.com/customsearch/v1"
-            params = {
-                'q': keyword,
-                'cx': 'c06054d0f86e8475f',
-                'key': GEOCODING_API_KEY,
-                'siteSearch': '.tr',
-            }
-            response = requests.get(search_url, params=params).json()
-            if 'items' in response:
-                for item in response['items'][:3]:  # İlk 3 sonucu al
-                    results.append({
-                        'title': item['title'],
-                        'url': item['link']
-                    })
-        print(f"\033[94mArama sonuçları:\033[0m {results}")
-    except Exception as e:
-        print(f"Google Search API hatası: {e}")
-    return results
-# YENİ bitiş
-    
 # EXIF verilerini çekme
 def extract_exif(filepath):
     try:
@@ -292,6 +232,67 @@ def analyze_image(filepath):
     except Exception as e:
         print(f"\033[91mVision API hatası:\033[0m {e}")
         return {'error': 'Vision API ile analiz edilemedi'}
+
+# YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
+def analyze_image_with_web_detection(filepath):
+    try:
+        with io.open(filepath, 'rb') as image_file:
+            content = image_file.read()
+        image = vision.Image(content=content)
+
+        # Web Detection
+        response = VISION_CLIENT.web_detection(image=image)
+        web_entities = response.web_detection.web_entities
+        print("\033[94mWeb Detection Response:\033[0m", response)
+
+        if web_entities:
+            print("\033[92mWeb Entity Detection Successful\033[0m")
+            return {
+                'web_entities': web_entities
+            }
+
+        print("\033[93mWeb Detection'da hiçbir sonuç bulunamadı.\033[0m")
+        return {'error': 'Herhangi bir web varlığı tespit edilemedi'}
+
+    except Exception as e:
+        print(f"\033[91mVision API hatası:\033[0m {e}")
+        return {'error': 'Vision API ile analiz edilemedi'}
+
+def extract_top_keywords(vision_data):
+    web_entities = vision_data.get('web_entities', [])
+    text_data = " ".join([entity.description for entity in web_entities])
+
+    doc = nlp(text_data)
+    words = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+    word_counts = Counter(words)
+    top_keywords = [word for word, _ in word_counts.most_common(3)]
+
+    print(f"\033[94mEn çok geçen 3 kelime:\033[0m {top_keywords}")
+    return top_keywords
+
+def search_with_keywords(keywords):
+    results = []
+    try:
+        for keyword in keywords:
+            search_url = "https://www.googleapis.com/customsearch/v1"
+            params = {
+                'q': keyword,
+                'cx': 'c06054d0f86e8475f',
+                'key': GEOCODING_API_KEY,
+                'siteSearch': '.tr',
+            }
+            response = requests.get(search_url, params=params).json()
+            if 'items' in response:
+                for item in response['items'][:3]:  # İlk 3 sonucu al
+                    results.append({
+                        'title': item['title'],
+                        'url': item['link']
+                    })
+        print(f"\033[94mArama sonuçları:\033[0m {results}")
+    except Exception as e:
+        print(f"Google Search API hatası: {e}")
+    return results
+# YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
 def get_coordinates_from_description(description):
     """Description kullanarak Google Maps Geocoding API'den koordinat ve adres alır."""
