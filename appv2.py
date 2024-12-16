@@ -8,7 +8,7 @@ import requests
 import spacy
 from PIL import Image
 from PIL.ExifTags import TAGS
-from collections import Counter #
+from collections import Counter
 
 nlp = spacy.load('en_core_web_sm')
 
