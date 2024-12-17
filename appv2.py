@@ -22,7 +22,7 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'json-dosya-adi.json'
 VISION_CLIENT = vision.ImageAnnotatorClient()
 GEOCODING_API_KEY = 'API_ANAHTARI'
 PLACES_API_KEY = GEOCODING_API_KEY # GEOCODING ve PLACES API (NEW) aynıdır
-CUSTOM_SEARCH_JSON_API = GEOCODING_API_KEY
+CUSTOM_SEARCH_JSON_API = GEOCODING_API_KEY # GEOCODING ve CUSTOM SEARCH JSON API aynıdır
 
 # Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır
 UPLOAD_FOLDER = 'uploads'
