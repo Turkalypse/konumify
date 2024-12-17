@@ -8,6 +8,7 @@ import requests
 import spacy
 from PIL import Image
 from PIL.ExifTags import TAGS
+from collections import Counter
 
 nlp = spacy.load('en_core_web_sm')
 
@@ -16,12 +17,13 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'x-yyyyyy-zzzzzzzzzzzz.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'konumify-357c9a38270d.json'
 VISION_CLIENT = vision.ImageAnnotatorClient()
-GEOCODING_API_KEY = 'API_ANAHTARI'
+GEOCODING_API_KEY = 'AIzaSyAUQlRxbb5KLtbg2qAtfgL78XKVYHMb7MU'
 PLACES_API_KEY = GEOCODING_API_KEY # GEOCODING ve PLACES API (NEW) aynıdır
+CUSTOM_SEARCH_JSON_API = GEOCODING_API_KEY
 
-# Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır ve analiz tamamlanınca yer kaplamamak için silinir.
+# Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -42,7 +44,7 @@ def index():
         file.save(filepath)
 
         try:
-            # 1. EXIF verilerininin kontrolü
+            # 1. EXIF verilerinin kontrolü
             exif_data = extract_exif(filepath)
             if exif_data:
                 print("\033[92mEXIF yöntemi ile bulundu\033[0m")
@@ -71,16 +73,29 @@ def index():
 
             # 3. Vision API ile analiz
             vision_data = analyze_image(filepath)
-            if 'error' not in vision_data:
+            if 'error' not in vision_data and all(vision_data.get(key) is not None for key in ('latitude', 'longitude', 'address')):
                 print("\033[92mVision API yöntemi ile bulundu\033[0m")
                 satellite_image_url = get_satellite_image_url(vision_data['latitude'], vision_data['longitude'])
                 return render_template('result.html', place_info=vision_data, satellite_image_url=satellite_image_url)
             else:
                 print("\033[93mVision API ile yer bulma başarısız.\033[0m")
+                
+            # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
+            if any(vision_data.get(key) is None for key in ('description', 'latitude', 'longitude', 'address')):
+                print("\033[93mSonuçlar yetersiz, Web Detection işleme geçiliyor.\\033[0m")
+                vision_data_web = analyze_image_with_web_detection(filepath)
+                if 'error' not in vision_data_web:
+                    top_keywords = extract_top_keywords(vision_data_web)
+                    search_results = search_with_keywords(top_keywords)
+                    return render_template('result2.html', top_keywords=top_keywords, search_results=search_results)
+                else:
+                    print("\033[93mWeb Detection başarısız.\033[0m")
+            # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
             print("\033[93mAnaliz tamamlandı ancak sonuç bulunamadı. Daha sade veya spesifik bir metin kullanmayı deneyin.\033[0m")
         finally:
             if os.path.exists(filepath):
+                # Yüklenen fotoğraflar analiz tamamlanınca yer kaplamamak için silinir.
                 os.remove(filepath)
 
     return render_template('index.html')
@@ -192,8 +207,7 @@ def analyze_image(filepath):
         if web_entities:
             primary_entity = max(web_entities, key=lambda e: e.score if e.description else 0)
             description = primary_entity.description if primary_entity and primary_entity.description else "Belirlenemedi"
-            lat, lng = None, None
-            address = None
+            lat, lng, address = None, None, None
 
             if description:
                 geocode_result = get_coordinates_from_description(description)
@@ -220,6 +234,67 @@ def analyze_image(filepath):
     except Exception as e:
         print(f"\033[91mVision API hatası:\033[0m {e}")
         return {'error': 'Vision API ile analiz edilemedi'}
+
+# YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
+def analyze_image_with_web_detection(filepath):
+    try:
+        with io.open(filepath, 'rb') as image_file:
+            content = image_file.read()
+        image = vision.Image(content=content)
+
+        # Web Detection
+        response = VISION_CLIENT.web_detection(image=image)
+        web_entities = response.web_detection.web_entities
+        print("\033[94mWeb Detection Response:\033[0m", response)
+
+        if web_entities:
+            print("\033[92mWeb Entity Detection Successful\033[0m")
+            return {
+                'web_entities': web_entities
+            }
+
+        print("\033[93mWeb Detection'da hiçbir sonuç bulunamadı.\033[0m")
+        return {'error': 'Herhangi bir web varlığı tespit edilemedi'}
+
+    except Exception as e:
+        print(f"\033[91mVision API hatası:\033[0m {e}")
+        return {'error': 'Vision API ile analiz edilemedi'}
+
+def extract_top_keywords(vision_data):
+    web_entities = vision_data.get('web_entities', [])
+    text_data = " ".join([entity.description for entity in web_entities])
+
+    doc = nlp(text_data)
+    words = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+    word_counts = Counter(words)
+    top_keywords = [word for word, _ in word_counts.most_common(3)]
+
+    print(f"\033[94mEn çok geçen 3 kelime:\033[0m {top_keywords}")
+    return top_keywords
+
+def search_with_keywords(keywords):
+    results = []
+    try:
+        for keyword in keywords:
+            search_url = "https://www.googleapis.com/customsearch/v1"
+            params = {
+                'q': keyword,
+                'cx': 'c06054d0f86e8475f',
+                'key': GEOCODING_API_KEY,
+                'siteSearch': '.tr',
+            }
+            response = requests.get(search_url, params=params).json()
+            if 'items' in response:
+                for item in response['items'][:3]:  # İlk 3 sonucu al
+                    results.append({
+                        'title': item['title'],
+                        'url': item['link']
+                    })
+        print(f"\033[94mArama sonuçları:\033[0m {results}")
+    except Exception as e:
+        print(f"Google Search API hatası: {e}")
+    return results
+# YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
 def get_coordinates_from_description(description):
     """Description kullanarak Google Maps Geocoding API'den koordinat ve adres alır."""
@@ -314,3 +389,4 @@ def get_place_details_from_id(place_id, api_key):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
