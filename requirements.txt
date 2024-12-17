@@ -2,5 +2,6 @@ Flask
 google-cloud-vision
 requests
 spacy
-pillow
 werkzeug
+Pillow
+gunicorn
