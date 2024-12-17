@@ -17,12 +17,13 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'x-yyyyyy-zzzzzzzzzzzz.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'konumify-357c9a38270d.json'
 VISION_CLIENT = vision.ImageAnnotatorClient()
-GEOCODING_API_KEY = 'API_ANAHTARI'
+GEOCODING_API_KEY = 'AIzaSyAUQlRxbb5KLtbg2qAtfgL78XKVYHMb7MU'
 PLACES_API_KEY = GEOCODING_API_KEY # GEOCODING ve PLACES API (NEW) aynıdır
+CUSTOM_SEARCH_JSON_API = GEOCODING_API_KEY
 
-# Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır ve analiz tamamlanınca yer kaplamamak için silinir.
+# Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -94,6 +95,7 @@ def index():
             print("\033[93mAnaliz tamamlandı ancak sonuç bulunamadı. Daha sade veya spesifik bir metin kullanmayı deneyin.\033[0m")
         finally:
             if os.path.exists(filepath):
+                # Yüklenen fotoğraflar analiz tamamlanınca yer kaplamamak için silinir.
                 os.remove(filepath)
 
     return render_template('index.html')
@@ -278,7 +280,7 @@ def search_with_keywords(keywords):
             params = {
                 'q': keyword,
                 'cx': 'c06054d0f86e8475f',
-                'key': GEOCODING_API_KEY,
+                'key': CUSTOM_SEARCH_JSON_API,
                 'siteSearch': '.tr',
             }
             response = requests.get(search_url, params=params).json()
