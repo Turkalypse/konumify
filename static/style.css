@@ -62,6 +62,24 @@ input[type="file"]:focus {
     outline: none;
 }
 
+/* "sonuc" sınıfı için stil ve animasyon efekti */
+.sonuc {
+    font-weight: bold; /* Yazıyı kalın yapar */
+    color: #2188C9; /* Başlangıç rengini belirler */
+    text-decoration: none; /* Alt çizgiyi kaldırır */
+    position: relative; /* Animasyonun konumunu ayarlamak için */
+    display: inline-block; /* Elementi satır içi blok olarak tutar */
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; /* Renk, hareket ve metin gölge animasyonu */
+    text-transform: uppercase; /* Metni büyük harfe dönüştürür */
+}
+
+/* Hover (üzerine gelindiğinde) efekti */
+.sonuc:hover {
+    color: #00bfff; /* Üzerine gelindiğinde renk değişimi */
+    transform: scale(1.1); /* Hafif büyütme efekti */
+    text-shadow: 0 0 8px rgba(0, 191, 255, 0.8), 0 0 20px rgba(0, 191, 255, 0.6), 0 0 30px rgba(0, 191, 255, 0.4); /* Parlama (glow) efekti */
+}
+
 button {
     padding: 12px 25px;
     background: #007bff;
