@@ -248,8 +248,14 @@ def analyze_image_with_ocr(filepath):
         image = vision.Image(content=content)
         response = VISION_CLIENT.text_detection(image=image)
         texts = response.text_annotations
+        
         if texts:
             detected_text = texts[0].description
+            
+            # Eğer algılanan metin 2 veya daha az karakter uzunluğundaysa, hemen çık
+            if len(detected_text) <= 2:
+                print("\033[93mAlgılanan metin 2 veya daha az karakter uzunluğunda, atlanıyor.\033[0m")
+                return {'error': 'Metin 2 veya daha az karakter uzunluğunda olduğu için geçersiz.'}
             
             # NLP uygulama
             doc = nlp(detected_text)
@@ -261,8 +267,8 @@ def analyze_image_with_ocr(filepath):
             entities = [(ent.text, ent.label_) for ent in doc.ents]
             print("\033[92mVarlıklar:\033[0m", entities)
 
-            # Anahtar kelimeleri bulma
-            keywords = set(token.lemma_ for token in doc if token.is_alpha and not token.is_stop)
+            # Anahtar kelimeleri bulma ve 2 veya daha az karakterli kelimeleri filtreleme
+            keywords = set(token.lemma_ for token in doc if token.is_alpha and not token.is_stop and len(token.lemma_) > 2)
             print("\033[92mAnahtar Kelimeler:\033[0m", keywords)
 
             return {'text': detected_text, 'cleaned_text': cleaned_text, 'entities': entities, 'keywords': list(keywords)}
