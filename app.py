@@ -1,5 +1,6 @@
 import os
 import io
+import re
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 from google.cloud import vision
@@ -17,9 +18,9 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'konumify-357c9a38270d.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'json-dosya-adi.json'
 VISION_CLIENT = vision.ImageAnnotatorClient()
-GEOCODING_API_KEY = 'AIzaSyAUQlRxbb5KLtbg2qAtfgL78XKVYHMb7MU'
+GEOCODING_API_KEY = 'API_ANAHTARI'
 PLACES_API_KEY = GEOCODING_API_KEY # GEOCODING ve PLACES API (NEW) aynıdır
 CUSTOM_SEARCH_JSON_API = GEOCODING_API_KEY
 
@@ -82,7 +83,7 @@ def index():
                 
             # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
             if any(vision_data.get(key) is None for key in ('description', 'latitude', 'longitude', 'address')):
-                print("\033[93mSonuçlar yetersiz, Web Detection işleme geçiliyor.\\033[0m")
+                print("\033[93mSonuçlar yetersiz, Web Detection işleme geçiliyor.\033[0m")
                 vision_data_web = analyze_image_with_web_detection(filepath)
                 if 'error' not in vision_data_web:
                     top_keywords = extract_top_keywords(vision_data_web)
@@ -244,55 +245,138 @@ def analyze_image_with_web_detection(filepath):
 
         # Web Detection
         response = VISION_CLIENT.web_detection(image=image)
-        web_entities = response.web_detection.web_entities
+        web_detection = response.web_detection
         print("\033[94mWeb Detection Response:\033[0m", response)
 
-        if web_entities:
-            print("\033[92mWeb Entity Detection Successful\033[0m")
-            return {
-                'web_entities': web_entities
-            }
+        if web_detection:
+            print("\033[92mWeb Detection Başarılı\033[0m")
 
-        print("\033[93mWeb Detection'da hiçbir sonuç bulunamadı.\033[0m")
-        return {'error': 'Herhangi bir web varlığı tespit edilemedi'}
+            # full_matching_images, partial_matching_images ve pages_with_matching_images verilerini çıkar
+            web_data = {
+                'full_matching_images': [image.url for image in web_detection.full_matching_images],
+                'partial_matching_images': [image.url for image in web_detection.partial_matching_images],
+                'pages_with_matching_images': [
+                    {'url': page.url, 'title': page.page_title} for page in web_detection.pages_with_matching_images
+                ]
+            }
+            return web_data
+        else:
+            print("\033[93mWeb Detection'da hiçbir sonuç bulunamadı.\033[0m")
+            return {'error': 'Herhangi bir web verisi tespit edilemedi'}
 
     except Exception as e:
         print(f"\033[91mVision API hatası:\033[0m {e}")
         return {'error': 'Vision API ile analiz edilemedi'}
 
-def extract_top_keywords(vision_data):
-    web_entities = vision_data.get('web_entities', [])
-    text_data = " ".join([entity.description for entity in web_entities])
+def extract_top_keywords(web_data):
+    """
+    Web Detection verilerinden URL'ler ve page_title'lardaki kelimeleri analiz eder.
+    Alan adları, uzantılar, tamamen sayılardan oluşan ifadeler ve "com" gibi gereksiz kelimeleri filtreler.
+    """
+    ignore_list = {"https", "http", "www", "net", "org", "jpg", "png", "jpeg", 
+                   "webp", "html", "php", "uploads", "cdn", "storage", "crop", 
+                   "images", "resize", "files", "com", "thumbs"}
 
-    doc = nlp(text_data)
-    words = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
-    word_counts = Counter(words)
-    top_keywords = [word for word, _ in word_counts.most_common(3)]
+    word_counts_per_source = {}
 
-    print(f"\033[94mEn çok geçen 3 kelime:\033[0m {top_keywords}")
-    return top_keywords
+    # Helper function: Metni analiz et ve kelime sayımı yap
+    def analyze_text(source, text, category):
+        # Metni temizle: Noktalama, sayılar ve özel karakterler kaldır
+        clean_text = re.sub(r'[^\w\s]', ' ', text)  # Özel karakterleri kaldır
+        clean_text = re.sub(r'\b\d+\b', '', clean_text)  # Tamamen sayılardan oluşan ifadeleri kaldır
+        
+        # Kelimeleri filtrele
+        words = [word.lower() for word in clean_text.split() 
+                 if len(word) > 2 and word.lower() not in ignore_list]
+        
+        if source not in word_counts_per_source:
+            word_counts_per_source[source] = {'URL': Counter(), 'page_title': Counter()}
+        word_counts_per_source[source][category].update(words)
+
+    # FULL_MATCHING_IMAGES - URL'ler
+    if 'full_matching_images' in web_data:
+        source_name = 'full_matching_images'
+        for url in web_data[source_name]:
+            analyze_text(source_name, url, 'URL')
+
+    # PARTIAL_MATCHING_IMAGES - URL'ler
+    if 'partial_matching_images' in web_data:
+        source_name = 'partial_matching_images'
+        for url in web_data[source_name]:
+            analyze_text(source_name, url, 'URL')
+
+    # PAGES_WITH_MATCHING_IMAGES - URL'ler ve PAGE_TITLE'lar
+    if 'pages_with_matching_images' in web_data:
+        source_name = 'pages_with_matching_images'
+        for page in web_data[source_name]:
+            analyze_text(source_name, page['url'], 'URL')
+            analyze_text(source_name, page['title'], 'page_title')
+
+    # Detaylı çıktılar: Kaynaklara göre kelime sayımları
+    print("\n\033[94mKaynaklara Göre Kelime Sayımları (URL ve Page Title Ayrımı):\033[0m")
+    for source, categories in word_counts_per_source.items():
+        print(f"\n\033[92m{source}:\033[0m")
+        for category, counts in categories.items():
+            print(f"  \033[93m{category}:\033[0m")
+            for word, count in counts.most_common(5):  # İlk 5 kelime
+                print(f"    {word}: {count}")
+
+    # Genel toplam: Tüm kaynaklardan en sık geçen 3 kelime
+    total_word_counts = Counter()
+    for categories in word_counts_per_source.values():
+        for counts in categories.values():
+            total_word_counts.update(counts)
+
+    print("\n\033[94mTüm Kaynaklardan En Çok Geçen 3 Kelime:\033[0m")
+    for word, count in total_word_counts.most_common(3):
+        print(f"  {word}: {count}")
+
+    return total_word_counts.most_common(3)
 
 def search_with_keywords(keywords):
     results = []
     try:
-        for keyword in keywords:
+        for keyword, _ in keywords:  # En çok geçen 3 kelimeyi alıyoruz
+            print(f"\n\033[94m'{keyword}' kelimesi Google'da aratılıyor...\033[0m")
             search_url = "https://www.googleapis.com/customsearch/v1"
             params = {
                 'q': keyword,
-                'cx': 'c06054d0f86e8475f',
-                'key': GEOCODING_API_KEY,
-                'siteSearch': '.tr',
+                'cx': 'e206f5e2b59f44772',  # Custom Search Engine ID
+                'key': CUSTOM_SEARCH_JSON_API,
+                'lr': 'lang_tr',
+                'siteSearch': 'tr'
             }
-            response = requests.get(search_url, params=params).json()
-            if 'items' in response:
-                for item in response['items'][:3]:  # İlk 3 sonucu al
+            response = requests.get(search_url, params=params)
+
+            # HTTP Hatası kontrolü
+            if response.status_code != 200:
+                print(f"\033[91mHata: HTTP {response.status_code}\033[0m")
+                if response.status_code == 403:
+                    error_message = response.json().get('error', {}).get('message', 'Yetkilendirme veya kota hatası')
+                    print(f"\033[93mDetay:\033[0m {error_message}")
+                    if "quota" in error_message.lower():
+                        print("\033[91mKota sınırı aşılmış! API kotasını kontrol edin.\033[0m")
+                continue
+
+            json_response = response.json()
+            total_results = json_response.get('searchInformation', {}).get('totalResults', '0')
+            print(f"\033[92mToplam sonuç sayısı:\033[0m {total_results}")
+
+            if 'items' in json_response:
+                print(f"\033[93m'{keyword}' için bulunan ilk 3 başlık:\033[0m")
+                for item in json_response['items'][:3]:  # İlk 3 sonucu al
+                    title = item['title']
+                    link = item['link']
+                    print(f"  - \033[96mBaşlık:\033[0m {title}")
+                    print(f"    \033[96mURL:\033[0m {link}")
                     results.append({
-                        'title': item['title'],
-                        'url': item['link']
+                        'title': title,
+                        'url': link
                     })
-        print(f"\033[94mArama sonuçları:\033[0m {results}")
+            else:
+                print(f"\033[91m'{keyword}' için sonuç bulunamadı.\033[0m")
     except Exception as e:
-        print(f"Google Search API hatası: {e}")
+        print(f"\033[91mGoogle Search API hatası:\033[0m {e}")
     return results
 # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
