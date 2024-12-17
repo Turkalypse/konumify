@@ -19,8 +19,8 @@ app = Flask(__name__)
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'x-yyyyyy-zzzzzzzzzzzz.json'
 VISION_CLIENT = vision.ImageAnnotatorClient()
-GEOCODING_API_KEY = 'API_ANAHTARI' # GEOCODING ve PLACES API (NEW) aynıdır
-PLACES_API_KEY = GEOCODING_API_KEY
+GEOCODING_API_KEY = 'API_ANAHTARI'
+PLACES_API_KEY = GEOCODING_API_KEY # GEOCODING ve PLACES API (NEW) aynıdır
 
 # Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır ve analiz tamamlanınca yer kaplamamak için silinir.
 UPLOAD_FOLDER = 'uploads'
