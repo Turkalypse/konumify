@@ -10,6 +10,9 @@ import spacy
 from PIL import Image
 from PIL.ExifTags import TAGS
 from collections import Counter
+from dotenv import load_dotenv
+
+load_dotenv()
 
 nlp = spacy.load('en_core_web_sm')
 
@@ -18,11 +21,11 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'json-dosya-adi.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 VISION_CLIENT = vision.ImageAnnotatorClient()
-GEOCODING_API_KEY = 'API_ANAHTARI'
-PLACES_API_KEY = GEOCODING_API_KEY # GEOCODING ve PLACES API (NEW) aynıdır
-CUSTOM_SEARCH_JSON_API = GEOCODING_API_KEY # GEOCODING ve CUSTOM SEARCH JSON API aynıdır
+GEOCODING_API_KEY = os.getenv('GEOCODING_API_KEY')
+PLACES_API_KEY = os.getenv('PLACES_API_KEY')
+CUSTOM_SEARCH_JSON_API = os.getenv('CUSTOM_SEARCH_JSON_API')
 
 # Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır
 UPLOAD_FOLDER = 'uploads'
@@ -275,7 +278,7 @@ def extract_top_keywords(web_data):
     """
     ignore_list = {"https", "http", "www", "net", "org", "jpg", "png", "jpeg", 
                    "webp", "html", "php", "uploads", "cdn", "storage", "crop", 
-                   "images", "resize", "files", "com", "thumbs"}
+                   "images", "resize", "files", "com", "thumbs", "content"}
 
     word_counts_per_source = {}
 
