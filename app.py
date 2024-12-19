@@ -1,12 +1,12 @@
 import os
 import io
 import re
-from flask import Flask, render_template, request
-from werkzeug.utils import secure_filename
-from google.cloud import vision
 import logging
 import requests
 import spacy
+from flask import Flask, render_template, request
+from werkzeug.utils import secure_filename
+from google.cloud import vision
 from PIL import Image
 from PIL.ExifTags import TAGS
 from collections import Counter
