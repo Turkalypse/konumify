@@ -92,6 +92,6 @@ Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LIC
 
 ## Örnek sonuç:
 
-# ![KonumifyIndex](https://i.ibb.co/0CVZQNJ/image.jpg)
-# ![KonumifyIndex](https://i.ibb.co/J5x6qzD/index.png)
-# ![KonumifyResult](https://i.ibb.co/vBgcZbj/result.png)
+# ![KonumifyIndex](https://i.ibb.co/W5fZDbv/Rijksmuseum-IC.jpg)
+# ![KonumifyIndex](https://i.ibb.co/kG853Tx/index.jpg)
+# ![KonumifyResult](https://i.ibb.co/kKnrSK8/result.jpg)
