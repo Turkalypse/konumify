@@ -52,7 +52,7 @@ def index():
             exif_data = extract_exif(filepath)
             if exif_data:
                 print("\033[92mEXIF yöntemi ile bulundu\033[0m")
-                return render_template('result.html', place_info=exif_data)
+                return render_template('sonuc.html', place_info=exif_data)
             else:
                 print("\033[93mEXIF verisi bulunamadı, diğer yöntemlere geçiliyor…\033[0m")
 
@@ -65,7 +65,7 @@ def index():
                     if detailed_place:
                         print("\033[92mOCR ve Places API yöntemi ile bulundu\033[0m")
                         satellite_image_url = get_satellite_image_url(detailed_place['latitude'], detailed_place['longitude'])
-                        return render_template('result.html', place_info=detailed_place, satellite_image_url=satellite_image_url)
+                        return render_template('sonuc.html', place_info=detailed_place, satellite_image_url=satellite_image_url)
                 else:
                     print("\033[93mPlaces API ile yer bulma başarısız. Diğer yöntemlere geçiliyor…\033[0m")
             else:
@@ -76,18 +76,21 @@ def index():
             if 'error' not in vision_data and all(vision_data.get(key) is not None for key in ('latitude', 'longitude', 'address')):
                 print("\033[92mVision API yöntemi ile bulundu\033[0m")
                 satellite_image_url = get_satellite_image_url(vision_data['latitude'], vision_data['longitude'])
-                return render_template('result.html', place_info=vision_data, satellite_image_url=satellite_image_url)
+                return render_template('sonuc.html', place_info=vision_data, satellite_image_url=satellite_image_url)
             else:
                 print("\033[93mVision API ile yer bulma başarısız. Diğer yöntemlere geçiliyor...\033[0m")
 
-            # 4. Web Detection ile analiz
-            vision_data_web = analyze_image_with_web_detection(filepath)
-            if 'error' not in vision_data_web:
-                top_keywords = extract_top_keywords(vision_data_web)
-                search_results = search_with_keywords(top_keywords)
-                return render_template('result2.html', top_keywords=top_keywords, search_results=search_results)
-            else:
-                print("\033[93mWeb Detection ile analiz başarısız.\033[0m")
+            # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
+            if any(vision_data.get(key) is None for key in ('description', 'latitude', 'longitude', 'address')):
+                print("\033[93mSonuçlar yetersiz, Web Detection işleme geçiliyor.\033[0m")
+                vision_data_web = analyze_image_with_web_detection(filepath)
+                if 'error' not in vision_data_web:
+                    top_keywords = extract_top_keywords(vision_data_web)
+                    search_results = search_with_keywords(top_keywords)
+                    return render_template('bulunamadi.html', top_keywords=top_keywords, search_results=search_results)
+                else:
+                    print("\033[93mWeb Detection başarısız.\033[0m")
+            # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
             print("\033[93mAnaliz tamamlandı ancak sonuç bulunamadı. Daha sade veya spesifik bir metin kullanmayı deneyin.\033[0m")
 
