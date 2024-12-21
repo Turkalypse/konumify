@@ -190,7 +190,7 @@ footer {
     font-size: 16.5px;
     display: inline-block;
     animation: kalpbeat 1s infinite;
-    color: red;
+    color: #007bff;
 }
 
 @keyframes kalpbeat {
