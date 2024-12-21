@@ -13,9 +13,9 @@ body {
 }
 
 .container {
-    width: 95%;
-    max-width: 900px;
-    padding: 30px;
+    width: 25%;
+    max-width: 600px;
+    padding: 20px;
     background: #2a2a3f;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
@@ -62,22 +62,20 @@ input[type="file"]:focus {
     outline: none;
 }
 
-/* "sonuc" sınıfı için stil ve animasyon efekti */
 .sonuc {
-    font-weight: bold; /* Yazıyı kalın yapar */
-    color: #2188C9; /* Başlangıç rengini belirler */
-    text-decoration: none; /* Alt çizgiyi kaldırır */
-    position: relative; /* Animasyonun konumunu ayarlamak için */
-    display: inline-block; /* Elementi satır içi blok olarak tutar */
-    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease; /* Renk, hareket ve metin gölge animasyonu */
-    text-transform: uppercase; /* Metni büyük harfe dönüştürür */
+    font-weight: bold;
+    color: #2188C9;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+    text-transform: uppercase;
 }
 
-/* Hover (üzerine gelindiğinde) efekti */
 .sonuc:hover {
-    color: #00bfff; /* Üzerine gelindiğinde renk değişimi */
-    transform: scale(1.1); /* Hafif büyütme efekti */
-    text-shadow: 0 0 8px rgba(0, 191, 255, 0.8), 0 0 20px rgba(0, 191, 255, 0.6), 0 0 30px rgba(0, 191, 255, 0.4); /* Parlama (glow) efekti */
+    color: #00bfff;
+    transform: scale(1.1);
+    text-shadow: 0 0 8px rgba(0, 191, 255, 0.8), 0 0 20px rgba(0, 191, 255, 0.6), 0 0 30px rgba(0, 191, 255, 0.4);
 }
 
 button {
@@ -141,4 +139,65 @@ img {
 .file-name {
     margin-top: 10px;
     font-weight: bold;
+}
+
+footer {
+    background-color: #2a2a3f;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.parilti {
+    position: relative;
+    z-index: 1;
+}
+
+.efekt {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    animation: pulse 1.5s infinite;
+    z-index: 0;
+    filter: blur(5px);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.1;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.1;
+    }
+}
+
+.kalp {
+    font-size: 16.5px;
+    display: inline-block;
+    animation: kalpbeat 1s infinite;
+    color: red;
+}
+
+@keyframes kalpbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
 }
