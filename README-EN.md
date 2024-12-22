@@ -121,5 +121,5 @@ Contributions are welcome! Feel free to fork the repository, create a feature br
 
 ## Sample
 ![KonumifyPhoto](https://i.ibb.co/2FkwxF5/FSM.jpg)
-![KonumifyIndex](https://i.ibb.co/YthQtmB/1-en.jpg)
-![KonumifyResult](https://i.ibb.co/jVgyWXm/2-en.jpg)
+![KonumifyIndex](https://i.ibb.co/2knRqmP/1-en.jpg)
+![KonumifyResult](https://i.ibb.co/NFxd2y8/2-en.jpg)
