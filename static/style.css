@@ -200,3 +200,64 @@ footer {
         transform: scale(1.2);
     }
 }
+
+.dil-secici {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.dil-secici select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #2a2a3f;
+    border: 2px solid #2a2a3f;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #f0f0f0;
+    width: 160px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dil-secici select:hover {
+    background-color: #555;
+}
+
+.dil-secici select:focus {
+    outline: none;
+    border-color: #00bcd4;
+    background-color: #444;
+}
+
+.dil-secici option {
+    background-color: #333;
+    color: #f0f0f0;
+    padding: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.dil-secici option:checked {
+    background-color: #00bcd4;
+    color: #121212;
+}
+
+.dil-secici select:hover,
+.dil-secici select:focus {
+    border-color: #007bff;
+    background-color: #2a2a3f;
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    .dil-secici select {
+        font-size: 14px;
+        padding: 8px 15px;
+        width: 140px;
+    }
+}
