@@ -101,9 +101,9 @@ Bu projede aşağıdaki kütüphaneler gereklidir:
 places-api-project/
 ├── app.py            # Standart Places API uygulaması
 ├── appv2.py          # Yeni Places API uygulaması
-├── templates/        # HTML şablonları
-├── translations/     # Dil dosyaları
-├── static/           # Statik dosyalar (CSS, görseller)
+├── templates/        # HTML şablonları klasörü
+├── translations/     # Dil dosyaları klasörü
+├── static/           # Statik dosyalar klasörü (CSS, görseller)
 ├── uploads/          # Yüklenen geçici dosyalar klasörü (otomatik olarak oluşturulur, sizin oluşturmanıza gerek yoktur)
 ├── .env              # Ortam değişkenleri
 ├── requirements.txt  # Python kütüphaneleri
