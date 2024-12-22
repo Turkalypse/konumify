@@ -85,7 +85,7 @@ Bu projede aşağıdaki kütüphaneler gereklidir:
 
 1. Uygulamayı başlatın:
    ```bash
-   python app.py  # Standart Places API için
+   python app.py  # Places API için
    python appv2.py  # Places API (New) için
    ```
 
