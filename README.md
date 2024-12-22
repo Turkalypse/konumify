@@ -1,3 +1,5 @@
+# [Click to access the English README](README-EN.md)
+
 ![KonumifyLogosu](https://i.ibb.co/f1FJgSF/konumifywhite.png)
 
 Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden ve konum tabanlı bilgiler çıkaran iki farklı Flask uygulaması içerir. İki sürüm arasındaki temel fark, Places API'nin uygulanma şeklidir:
