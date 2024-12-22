@@ -69,7 +69,6 @@ input[type="file"]:focus {
     position: relative;
     display: inline-block;
     transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
-    text-transform: uppercase;
 }
 
 .sonuc:hover {
