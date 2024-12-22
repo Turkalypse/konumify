@@ -5,7 +5,7 @@
 Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden ve konum tabanlı bilgiler çıkaran iki farklı Flask uygulaması içerir. İki sürüm arasındaki temel fark, Places API'nin uygulanma şeklidir:
 
 - `app.py`: Standart Places API kullanır.
-- `appv2.py`: Yeni Places API'yi kullanır.
+- `appv2.py`: Places API (NEW)'i kullanır.
 
 ---
 
@@ -35,8 +35,8 @@ Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden 
 
 - **Google Cloud Vision API**: Görsel analizi için.
 - **Google Places API**:
-  - `app.py` içinde standart sürüm.
-  - `appv2.py` içinde yeni sürüm.
+  - `app.py` standart sürüm.
+  - `appv2.py` yeni sürüm.
 - **Google Geocoding API**: Koordinatları adreslere dönüştürmek için.
 - **Google Maps Static API**: Uydu haritaları oluşturmak için.
 - **Google Custom Search API**: Anahtar kelime tabanlı web aramaları için.
@@ -86,7 +86,7 @@ Bu projede aşağıdaki kütüphaneler gereklidir:
 1. Uygulamayı başlatın:
    ```bash
    python app.py  # Standart Places API için
-   python appv2.py  # Yeni Places API için
+   python appv2.py  # Places API (NEW) için
    ```
 
 2. Bir tarayıcı açın ve `http://127.0.0.1:5000` adresine gidin.
