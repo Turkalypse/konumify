@@ -101,9 +101,9 @@ places-api-project/
 ├── appv2.py          # Yeni Places API uygulaması
 ├── templates/        # HTML şablonları
 ├── translations/     # Dil dosyaları
-├── static/           # Statik dosyalar (CSS, JS, görseller)
+├── static/           # Statik dosyalar (CSS, görseller)
 ├── uploads/          # Yüklenen geçici dosyalar klasörü
-├── .env              # Ortam değişkenleri (depo içinde yer almaz)
+├── .env              # Ortam değişkenleri
 ├── requirements.txt  # Python bağımlılıkları
 └── README.md         # Proje belgeleri
 ```
