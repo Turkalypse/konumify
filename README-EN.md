@@ -1,4 +1,4 @@
-![KonumifyLogo](https://i.ibb.co/F82MGPP/konumify.png)
+![KonumifyLogosu](static/konumify.png)
 
 This repository contains two versions of a Flask application that utilizes Google Cloud services to analyze image files and extract location-based information. The key difference between the two versions is the implementation of the Places API:
 
