@@ -31,13 +31,13 @@ This repository contains two versions of a Flask application that utilizes Googl
 
 ### APIs Used
 
-- **Google Cloud Vision API**: For image analysis.
-- **Google Places API**:
-  - Standard version `app.py`.
-  - New version `appv2.py`.
-- **Google Geocoding API**: For reverse geocoding coordinates to addresses.
-- **Google Maps Static API**: For generating satellite map images.
-- **Google Custom Search API**: For keyword-based web searches.
+- [Google Cloud Vision API](https://cloud.google.com/vision/docs): For image analysis.
+- [Google Places API](https://developers.google.com/maps/documentation/places/web-service/choose-api):
+  - [Standard version](https://developers.google.com/maps/documentation/places/web-service/) `app.py`.
+  - [New version](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
+- [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): For reverse geocoding coordinates to addresses.
+- [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): For generating satellite map images.
+- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): For keyword-based web searches.
 
 ### Python Libraries
 
