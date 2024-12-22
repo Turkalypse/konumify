@@ -1,97 +1,126 @@
-# ![KonumifyLogosu](https://i.ibb.co/f1FJgSF/konumifywhite.png)
+![KonumifyLogosu](https://i.ibb.co/f1FJgSF/konumifywhite.png)
 
-Bu proje, EXIF meta verileri, OCR (Optik Karakter Tanıma) ve Google API'leriyle birlikte görüntü analizi ve konum tespiti yapar.
+Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden ve konum tabanlı bilgiler çıkaran iki farklı Flask uygulaması içerir. İki sürüm arasındaki temel fark, Places API'nin uygulanma şeklidir:
 
-## Projede kullanılan API'ler
+- `app.py`: Standart Places API kullanır.
+- `appv2.py`: Yeni Places API'yi kullanır.
 
-### 1. Google Vision API
-- **Amaç**: Görüntüleri analiz etmek ve içindeki yer işaretlerini, metinleri ve diğer görsel özellikleri tespit etmek için kullanılır.
-- **Dokümantasyon**: [Google Vision API Dokümantasyonu](https://cloud.google.com/vision/docs)
+---
 
-### 2. Google Geocoding API
-- **Amaç**: GPS koordinatlarından (enlem ve boylam) adres bilgisi elde etmek için kullanılır.
-- **Dokümantasyon**: [Geocoding API Dokümantasyonu](https://developers.google.com/maps/documentation/geocoding/start)
+## Özellikler
 
-### 3. Google Places API (New)
-- **Amaç**: Metin sorgusu veya yer kimliğinden (Place ID) yer detayları, adı, adresi ve coğrafi konumu almak için kullanılır.
-- **Dokümantasyon**: [Places API (New) Dokümantasyonu](https://developers.google.com/maps/documentation/places/web-service/)
+1. **Görsel Analizi**:
+   - Yüklenen görsellerden EXIF meta verilerini çıkarır.
+   - Görsellerdeki metinleri analiz etmek için OCR (Optik Karakter Tanıma) uygular.
+   - Google Cloud Vision API'yi kullanarak yer işaretlerini ve web içeriğini algılar.
 
-### 4. Google Maps Static API
-- **Amaç**: Coğrafi koordinatlara dayalı statik harita görüntüleri oluşturmak için kullanılır (uydu görüntüleri dahil).
-- **Dokümantasyon**: [Google Maps Static API Dokümantasyonu](https://developers.google.com/maps/documentation/static-maps)
+2. **Google Places API Entegrasyonu**:
+   - Metin sorguları ve koordinatlarla konum detaylarını alır.
+   - `appv2.py`, gelişmiş doğruluk için yeni Places API uç noktalarını ve yöntemlerini benimser.
+
+3. **Çok Dilli Destek**:
+   - Uygulama, Türkçe, İngilizce, Almanca, İspanyolca, Rusça gibi birden fazla dili destekler.
+   - Dil seçimi Flask-Babel aracılığıyla gerçekleştirilir.
+
+4. **Dinamik Uydu Haritaları**:
+   - Google Maps Static API'yi kullanarak algılanan konumların uydu görüntülerini gösterir.
+
+---
 
 ## Gereksinimler
 
-### Paketleri yükleme
-Gerekli paketleri aşağıdaki komutla yükleyebilirsiniz:
+### Kullanılan API'ler
 
-```bash
-pip install -r requirements.txt
-```
+- **Google Cloud Vision API**: Görsel analizi için.
+- **Google Places API**:
+  - `app.py` içinde standart sürüm.
+  - `appv2.py` içinde yeni sürüm.
+- **Google Geocoding API**: Koordinatları adreslere dönüştürmek için.
+- **Google Maps Static API**: Uydu haritaları oluşturmak için.
+- **Google Custom Search API**: Anahtar kelime tabanlı web aramaları için.
 
-### `requirements.txt`
+### Python Kütüphaneleri
 
-Bu projede kullanılan gerekli Python paketleri:
+Bu projede aşağıdaki kütüphaneler gereklidir:
 
-```
-Flask
-google-cloud-vision
-requests
-spacy
-pillow
-werkzeug
-```
+- `Flask`
+- `Flask-Babel`
+- `requests`
+- `spacy`
+- `google-cloud-vision`
+- `Pillow`
+- `python-dotenv`
+- `Werkzeug`
 
-### Google Cloud kimlik bilgileri
-Uygulamayı çalıştırmadan önce Google Cloud kimlik bilgilerinizi ayarladığınızdan emin olun:
-1. Bir Google Cloud projesi oluşturun ve Vision API ile Geocoding API'yi etkinleştirin.
-2. Google Cloud projeniz için JSON anahtar dosyasını indirin.
-3. `GOOGLE_APPLICATION_CREDENTIALS` ortam değişkenini JSON anahtar dosyanızın yoluna ayarlayın:
+---
 
-```bash
-export GOOGLE_APPLICATION_CREDENTIALS="path/to/your/credentials.json"
-```
+## Kurulum
 
-### Ortam değişkenleri
-- `GOOGLE_APPLICATION_CREDENTIALS`: Google Cloud kimlik bilgileri dosyanızın yolu.
-- `GEOCODING_API_KEY`: Google Geocoding API anahtarınız.
-- `PLACES_API_KEY`: Google Places API anahtarı (Geocoding API anahtarıyla aynı olabilir).
-
-## Başlatma
-1. Depoyu cihazınıza klonlayın:
+1. Depoyu klonlayın:
    ```bash
-   git clone https://github.com/Turkalypse/konumify-test.git
-   cd konumify
+   git clone https://github.com/yourusername/places-api-project.git
+   cd places-api-project
    ```
-2. Başlatın:
+
+2. Gerekli kütüphaneleri yükleyin:
    ```bash
-   python app.py
+   pip install -r requirements.txt
    ```
-3. Tarayıcınızda `http://127.0.0.1:5000` adresine giderek bir görüntü yükleyin ve konum detaylarını görün.
 
-## Dizin yapısı
+3. Google Cloud kimlik bilgilerinizi ayarlayın:
+   - Proje dizininde `.env` dosyasındaki aşağıdaki gerekli yerleri düzenleyin:
+     ```env
+     FLASK_SECRET_KEY=GİZLİ_ANAHTAR
+     GOOGLE_APPLICATION_CREDENTIALS=json-dosya-adi.json
+     GEOCODING_API_KEY=API_ANAHTARI
+     PLACES_API_KEY=${GEOCODING_API_KEY} # GEOCODING_API_KEY ile aynıdır
+     CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # GEOCODING_API_KEY ile aynıdır
+     ```
+
+---
+
+## Kullanım
+
+1. Uygulamayı başlatın:
+   ```bash
+   python app.py  # Standart Places API için
+   python appv2.py  # Yeni Places API için
+   ```
+
+2. Bir tarayıcı açın ve `http://127.0.0.1:5000` adresine gidin.
+
+3. Bir görsel yükleyin ve uygulamanın analiz etmesini bekleyin.
+
+---
+
+## Dizin Yapısı
+
 ```
-/project-directory
-    /uploads             # Yüklenmiş görüntüler için geçici depolama alanı (otomatik oluşturulur)
-    app.py               # Ana dosya
-    /templates
-        index.html       # Ana sayfa şablonu
-        result.html      # Görüntü analizi sonuçlarını gösteren şablon
-    /static
-        style.css         # Stil dosyası
-    requirements.txt      # Python paketleri listesi
+places-api-project/
+├── app.py            # Standart Places API uygulaması
+├── appv2.py          # Yeni Places API uygulaması
+├── templates/        # HTML şablonları
+├── translations/     # Dil dosyaları
+├── static/           # Statik dosyalar (CSS, JS, görseller)
+├── uploads/          # Yüklenen geçici dosyalar klasörü
+├── .env              # Ortam değişkenleri (depo içinde yer almaz)
+├── requirements.txt  # Python bağımlılıkları
+└── README.md         # Proje belgeleri
 ```
 
-## Sorun giderme
-- Google API anahtarlarınızın ve kimlik bilgilerinizin doğru bir şekilde ayarlandığından emin olun.
-- Uygulama henüz konum tespiti yapamayabilir ve benzerlik olduğu için yanlış konum tespiti yapabilir. Projem henüz yeni. İyileştirmeler zamanla yapılacaktır.
-- Yakında 'nasıl kurulur ve nasıl kullanılır' gibisinden rehber videosu eklenecektir.
+---
 
 ## Lisans
-Bu proje MIT Lisansı altında lisanslanmıştır - detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
-## Örnek sonuç:
+Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasına bakın.
 
+---
+
+## Katkılar
+
+Katkılar memnuniyetle karşılanır! Depoyu fork'layarak, bir özellik dalı oluşturarak ve bir pull request göndererek katkıda bulunabilirsiniz.
+
+## Örnek
 # ![KonumifyIndex](https://i.ibb.co/W5fZDbv/Rijksmuseum-IC.jpg)
 # ![KonumifyIndex](https://i.ibb.co/kG853Tx/index.jpg)
 # ![KonumifyResult](https://i.ibb.co/kKnrSK8/result.jpg)
