@@ -102,7 +102,7 @@ places-api-project/
 ├── templates/        # HTML templates
 ├── translations/     # Language files
 ├── static/           # Static files (CSS, images)
-├── uploads/          # Temporary folder for uploaded images (automatically generated, no need to generate it yourself)
+├── uploads/          # Temporary folder for uploaded images (automatically generated, no need to create it yourself)
 ├── .env              # Environment variables
 ├── requirements.txt  # Python libraries
 ```
