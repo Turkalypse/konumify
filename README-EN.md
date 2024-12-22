@@ -1,4 +1,4 @@
-# Places API Project
+![KonumifyLogosu](https://i.ibb.co/f1FJgSF/konumifywhite.png)
 
 This repository contains two versions of a Flask application that utilizes Google Cloud services to analyze image files and extract location-based information. The key difference between the two versions is the implementation of the Places API:
 
@@ -62,12 +62,6 @@ The following libraries are required for this project:
    cd places-api-project
    ```
 
-2. Create a virtual environment and activate it:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-
 3. Install dependencies:
    ```bash
    pip install -r requirements.txt
@@ -76,17 +70,12 @@ The following libraries are required for this project:
 4. Set up your Google Cloud credentials:
    - Create a `.env` file in the project directory with the following keys:
      ```env
-     FLASK_SECRET_KEY=your_secret_key
-     GOOGLE_APPLICATION_CREDENTIALS=path_to_your_service_account_key.json
-     GEOCODING_API_KEY=your_geocoding_api_key
-     PLACES_API_KEY=your_places_api_key
-     CUSTOM_SEARCH_JSON_API=your_custom_search_api_key
+     FLASK_SECRET_KEY=YOUR_SECRET_KEY
+     GOOGLE_APPLICATION_CREDENTIALS=json-file-name.json
+     GEOCODING_API_KEY=API_KEY
+     PLACES_API_KEY=${GEOCODING_API_KEY} # Same with GEOCODING_API_KEY
+     CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # Same with GEOCODING_API_KEY ile aynıdır
      ```
-
-5. Create an `uploads` folder in the project root:
-   ```bash
-   mkdir uploads
-   ```
 
 ---
 
@@ -130,3 +119,8 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Contributions
 
 Contributions are welcome! Feel free to fork the repository, create a feature branch, and submit a pull request.
+
+## Sample
+![KonumifyPhoto](https://i.ibb.co/2FkwxF5/FSM.jpg)
+![KonumifyIndex](https://i.ibb.co/YthQtmB/1-en.jpg)
+![KonumifyResult](https://i.ibb.co/jVgyWXm/2-en.jpg)
