@@ -3,7 +3,7 @@
 This repository contains two versions of a Flask application that utilizes Google Cloud services to analyze image files and extract location-based information. The key difference between the two versions is the implementation of the Places API:
 
 - `app.py`: Uses the standard Places API.
-- `appv2.py`: Utilizes the new Places API.
+- `appv2.py`: Utilizes the Places API (New).
 
 ---
 
@@ -33,8 +33,8 @@ This repository contains two versions of a Flask application that utilizes Googl
 
 - **Google Cloud Vision API**: For image analysis.
 - **Google Places API**:
-  - Standard version in `app.py`.
-  - New version in `appv2.py`.
+  - Standard version `app.py`.
+  - New version `appv2.py`.
 - **Google Geocoding API**: For reverse geocoding coordinates to addresses.
 - **Google Maps Static API**: For generating satellite map images.
 - **Google Custom Search API**: For keyword-based web searches.
@@ -84,7 +84,7 @@ The following libraries are required for this project:
 1. Start the application:
    ```bash
    python app.py  # For standard Places API
-   python appv2.py  # For new Places API
+   python appv2.py  # For Places API (New)
    ```
 
 2. Open a browser and navigate to `http://127.0.0.1:5000`.
