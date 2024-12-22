@@ -106,8 +106,7 @@ places-api-project/
 ├── static/           # Statik dosyalar (CSS, görseller)
 ├── uploads/          # Yüklenen geçici dosyalar klasörü
 ├── .env              # Ortam değişkenleri
-├── requirements.txt  # Python bağımlılıkları
-└── README.md         # Proje belgeleri
+├── requirements.txt  # Python kütüphaneleri
 ```
 
 ---
