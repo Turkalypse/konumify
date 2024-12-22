@@ -104,7 +104,7 @@ places-api-project/
 ├── templates/        # HTML şablonları
 ├── translations/     # Dil dosyaları
 ├── static/           # Statik dosyalar (CSS, görseller)
-├── uploads/          # Yüklenen geçici dosyalar klasörü
+├── uploads/          # Yüklenen geçici dosyalar klasörü (otomatik olarak oluşturulur, sizin oluşturmanıza gerek yoktur)
 ├── .env              # Ortam değişkenleri
 ├── requirements.txt  # Python kütüphaneleri
 ```
