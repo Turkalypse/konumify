@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://i.ibb.co/f1FJgSF/konumifywhite.png" alt="Konumify Logo" style="max-width: 50%; height: auto;">
+        <img src="{{ url_for('static', filename='konumify.png') }}" alt="Konumify Logo" style="max-width: 50%; height: auto;">
         {% if place_info.error %}
             <p style="color: red;">{{ place_info.error }}</p>
         {% else %}

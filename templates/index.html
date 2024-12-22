@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://i.ibb.co/f1FJgSF/konumifywhite.png" alt="Konumify Logo" style="max-width: 50%; height: auto;">        
+        <img src="{{ url_for('static', filename='konumify.png') }}" alt="Konumify Logo" style="max-width: 50%; height: auto;">        
         <form action="/" method="post" enctype="multipart/form-data" id="upload-form">
             <div class="drop-area" id="drop-area">
                 <p>{{ _('Fotoğrafı buraya sürükleyin veya ') }}<label for="file-input" style="cursor: pointer; color: gray; font-weight: bold;">{{ _('elle seçin') }}</label></p>
