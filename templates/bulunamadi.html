@@ -10,21 +10,21 @@
     <div class="container">
         <img src="https://i.ibb.co/f1FJgSF/konumifywhite.png" alt="Konumify Logo" style="max-width: 50%; height: auto;">
         
-        <p>Bu fotoğraf için tam olarak bir yer tespiti yapılamadı. Fakat bu fotoğrafın kaynağına inildiğinde sırasıyla 
-            <strong class="sonuc">{{ top_keywords[0][0] }}</strong>, <strong class="sonuc">{{ top_keywords[1][0] }}</strong> ve <strong class="sonuc">{{ top_keywords[2][0] }}</strong>
-            kelimelerinin çoğunlukta olduğu belirlendi.</p>
+        <p>{{ _('Bu fotoğraf için tam olarak bir yer tespiti yapılamadı. Fakat bu fotoğrafın kaynağına inildiğinde sırasıyla') }} 
+            <strong class="sonuc">{{ top_keywords[0][0] }}</strong>, <strong class="sonuc">{{ top_keywords[1][0] }}</strong> & <strong class="sonuc">{{ top_keywords[2][0] }}</strong>
+            {{ _('kelimelerinin çoğunlukta olduğu belirlendi.') }}</p>
         
-        <p>Bu fotoğraftaki yerin, bu üç sonuçla bağlantılı olması muhtemel.</p></br>
+        <p>{{ _('Bu fotoğraftaki yerin, bu üç sonuçla bağlantılı olması muhtemel.') }}</p></br>
         
-        <button onclick="window.location.href='/'">Başka bir fotoğrafı analiz et</button>
+        <button onclick="window.location.href='/'">{{ _('Başka bir fotoğrafı analiz et') }}</button>
     </div>
-	
-<footer>
-    <span class="parilti" onclick="window.open('https://github.com/Turkalypse', '_blank');" style="cursor: pointer;">
-        <div class="efekt"></div>
-        Turkalypse
-    </span> tarafından <span class="kalp">&#10084;</span> ile yapıldı.
-</footer>
-	
+    
+    <footer>
+        <span class="parilti" onclick="window.open('https://github.com/Turkalypse', '_blank');" style="cursor: pointer;">
+            <div class="efekt"></div>
+            Turkalypse
+        </span> tarafından <span class="kalp">&#10084;</span> ile yapıldı.
+    </footer>
+    
 </body>
 </html>
