@@ -70,7 +70,7 @@ Bu projede aşağıdaki kütüphaneler gereklidir:
 3. Google Cloud kimlik bilgilerinizi ayarlayın:
    - Proje dizininde `.env` dosyasındaki aşağıdaki gerekli yerleri düzenleyin:
      ```env
-     FLASK_SECRET_KEY=GİZLİ_ANAHTAR
+     FLASK_SECRET_KEY=GİZLİ_ANAHTAR # flask_secret_key_maker.py dosyasıyla bir tane oluşturun
      GOOGLE_APPLICATION_CREDENTIALS=json-dosya-adi.json
      GEOCODING_API_KEY=API_ANAHTARI
      PLACES_API_KEY=${GEOCODING_API_KEY} # GEOCODING_API_KEY ile aynıdır
