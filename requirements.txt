@@ -1,7 +1,8 @@
 Flask
-google-cloud-vision
+Flask-Babel
 requests
 spacy
-werkzeug
+google-cloud-vision
 Pillow
-gunicorn
+python-dotenv
+Werkzeug
