@@ -1,0 +1,81 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-21 15:01+0300\n"
+"PO-Revision-Date: 2024-12-21 15:01+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: templates/bulunamadi.html:13
+msgid ""
+"Bu fotoğraf için tam olarak bir yer tespiti yapılamadı. Fakat bu "
+"fotoğrafın kaynağına inildiğinde sırasıyla"
+msgstr ""
+"Точное местоположение этой фотографии определить не удалось. Однако, "
+"когда был проанализирован источник этой фотографии, было установлено, что слова"
+
+#: templates/bulunamadi.html:15
+msgid "kelimelerinin çoğunlukta olduğu belirlendi."
+msgstr "составляют большинство соответственно."
+
+#: templates/bulunamadi.html:17
+msgid "Bu fotoğraftaki yerin, bu üç sonuçla bağlantılı olması muhtemel."
+msgstr "Место, изображенное на этой фотографии, вероятно, связано с этими тремя результатами."
+
+#: templates/bulunamadi.html:19 templates/sonuc.html:30
+msgid "Başka bir fotoğrafı analiz et"
+msgstr "Проанализируйте другую фотографию"
+
+#: templates/index.html:24
+msgid "Fotoğrafı buraya sürükleyin veya "
+msgstr "Перетащите фотографию сюда или "
+
+#: templates/index.html:24
+msgid "elle seçin"
+msgstr "выберите вручную"
+
+#: templates/index.html:28
+msgid "Analiz et"
+msgstr "Анализируйте"
+
+#: templates/index.html:70
+msgid "Seçilen dosya: "
+msgstr "Выбранный файл: "
+
+#: templates/sonuc.html:15
+msgid "Yer:"
+msgstr "Расположение:"
+
+#: templates/sonuc.html:16
+msgid "Enlem:"
+msgstr "Широта:"
+
+#: templates/sonuc.html:17
+msgid "Boylam:"
+msgstr "Долгота:"
+
+#: templates/sonuc.html:18
+msgid "Adres:"
+msgstr "Адрес:"
+
+#: templates/sonuc.html:21
+msgid "Uydu görüntüsü"
+msgstr "Спутниковый снимок"
+
+#: templates/sonuc.html:26
+msgid "Google Haritalar ile görüntüle"
+msgstr "Просмотр с помощью Google Maps"
+
