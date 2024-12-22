@@ -2,7 +2,7 @@
 
 This repository contains two versions of a Flask application that utilizes Google Cloud services to analyze image files and extract location-based information. The key difference between the two versions is the implementation of the Places API:
 
-- `app.py`: Uses the standard Places API.
+- `app.py`: Uses the Places API.
 - `appv2.py`: Utilizes the Places API (New).
 
 ---
@@ -83,7 +83,7 @@ The following libraries are required for this project:
 
 1. Start the application:
    ```bash
-   python app.py  # For standard Places API
+   python app.py  # For Places API
    python appv2.py  # For Places API (New)
    ```
 
