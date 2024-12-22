@@ -101,7 +101,7 @@ places-api-project/
 ├── appv2.py          # New Places API implementation
 ├── templates/        # HTML templates
 ├── translations/     # Language files
-├── static/           # Static files (CSS, JS, images)
+├── static/           # Static files (CSS, images)
 ├── uploads/          # Temporary folder for uploaded images
 ├── .env              # Environment variables
 ├── requirements.txt  # Python dependencies
