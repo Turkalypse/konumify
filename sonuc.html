@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konumify</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='konumify.png') }}" alt="Konumify Logo" style="max-width: 50%; height: auto;">
+        {% if place_info.error %}
+            <p style="color: red;">{{ place_info.error }}</p>
+        {% else %}
+            <p><strong>{{ _('Yer:') }}</strong> {{ place_info.description }}</p>
+            <p><strong>{{ _('Enlem:') }}</strong> {{ place_info.latitude }}</p>
+            <p><strong>{{ _('Boylam:') }}</strong> {{ place_info.longitude }}</p>
+            <p><strong>{{ _('Adres:') }}</strong> {{ place_info.address }}</p>
+            
+            {% if satellite_image_url %}
+                <img src="{{ satellite_image_url }}" alt="{{ _('Uydu görüntüsü') }}" />
+            {% endif %}
+            
+            <p>
+                <button onclick="window.open('https://www.google.com/maps?q={{ place_info.latitude }},{{ place_info.longitude }}', '_blank');">
+                    {{ _('Google Haritalar ile görüntüle') }}
+                </button>
+            </p>
+        {% endif %}
+        <button onclick="window.location.href='/'">{{ _('Başka bir fotoğrafı analiz et') }}</button>
+    </div>
+    
+    <footer>
+        <span class="parilti" onclick="window.open('https://github.com/Turkalypse', '_blank');" style="cursor: pointer;">
+            <div class="efekt"></div>
+            Turkalypse
+        </span> tarafından <span class="kalp">&#10084;</span> ile yapıldı.
+    </footer>
+    
+</body>
+</html>
