@@ -9,18 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://i.ibb.co/f1FJgSF/konumifywhite.png" alt="Konumify Logo" style="max-width: 50%; height: auto;">
-        
-        <form action="{{ url_for('set_language', language='tr') }}" method="POST" style="display:inline;">
-            <select name="language" onchange="this.form.submit()" style="margin: 20px; padding: 5px;">
-                <option value="tr" {% if get_locale() == 'tr' %}selected{% endif %}>Türkçe</option>
-                <option value="en" {% if get_locale() == 'en' %}selected{% endif %}>English</option>
-                <option value="de" {% if get_locale() == 'de' %}selected{% endif %}>Deutsch</option>
-				<option value="es" {% if get_locale() == 'es' %}selected{% endif %}>Español</option>
-				<option value="ru" {% if get_locale() == 'ru' %}selected{% endif %}>Русский</option>
-            </select>
-        </form>
-        
+        <img src="https://i.ibb.co/f1FJgSF/konumifywhite.png" alt="Konumify Logo" style="max-width: 50%; height: auto;">        
         <form action="/" method="post" enctype="multipart/form-data" id="upload-form">
             <div class="drop-area" id="drop-area">
                 <p>{{ _('Fotoğrafı buraya sürükleyin veya ') }}<label for="file-input" style="cursor: pointer; color: gray; font-weight: bold;">{{ _('elle seçin') }}</label></p>
@@ -30,6 +19,16 @@
             <button type="submit">{{ _('Analiz et') }}</button>
         </form>
     </div>
+	
+	    <form action="{{ url_for('set_language', language='tr') }}" method="POST" class="dil-secici" style="display:inline;">
+            <select name="language" onchange="this.form.submit()" style="padding: 5px;">
+                <option value="tr" {% if get_locale() == 'tr' %}selected{% endif %}>Türkçe</option>
+                <option value="en" {% if get_locale() == 'en' %}selected{% endif %}>English</option>
+                <option value="de" {% if get_locale() == 'de' %}selected{% endif %}>Deutsch</option>
+				<option value="es" {% if get_locale() == 'es' %}selected{% endif %}>Español</option>
+				<option value="ru" {% if get_locale() == 'ru' %}selected{% endif %}>Русский</option>
+            </select>
+        </form>
 
     <footer>
         <span class="parilti" onclick="window.open('https://github.com/Turkalypse', '_blank');" style="cursor: pointer;">
