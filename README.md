@@ -123,5 +123,5 @@ Katkılar memnuniyetle karşılanır! Depoyu fork'layarak, bir özellik dalı ol
 
 ## Örnek
 ![KonumifyFotograf](https://i.ibb.co/2FkwxF5/FSM.jpg)
-![KonumifyIndex](https://i.ibb.co/wyFBXjG/1.jpg)
-![KonumifySonuc](https://i.ibb.co/gPQ34zc/2.jpg)
+![KonumifyIndex](https://i.ibb.co/LSKbBqR/1-tr.jpg)
+![KonumifySonuc](https://i.ibb.co/9hvrDMR/2-tr.jpg)
