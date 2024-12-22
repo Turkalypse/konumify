@@ -104,8 +104,7 @@ places-api-project/
 ├── static/           # Static files (CSS, images)
 ├── uploads/          # Temporary folder for uploaded images
 ├── .env              # Environment variables
-├── requirements.txt  # Python dependencies
-└── README.md         # Project documentation
+├── requirements.txt  # Python libraries
 ```
 
 ---
