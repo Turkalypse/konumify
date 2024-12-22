@@ -33,13 +33,13 @@ Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden 
 
 ### Kullanılan API'ler
 
-- **Google Cloud Vision API**: Görsel analizi için.
+- [Google Cloud Vision API](https://cloud.google.com/vision/docs): Görsel analizi için.
 - **Google Places API**:
-  - `app.py` standart sürüm.
-  - `appv2.py` yeni sürüm.
-- **Google Geocoding API**: Koordinatları adreslere dönüştürmek için.
-- **Google Maps Static API**: Uydu haritaları oluşturmak için.
-- **Google Custom Search API**: Anahtar kelime tabanlı web aramaları için.
+  - `app.py` [standart sürüm](https://developers.google.com/maps/documentation/places/web-service/).
+  - `appv2.py` [yeni sürüm](https://developers.google.com/maps/documentation/places/web-service/op-overview).
+- [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Koordinatları adreslere dönüştürmek için.
+- [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Uydu haritaları oluşturmak için.
+- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): Anahtar kelime tabanlı web aramaları için.
 
 ### Python Kütüphaneleri
 
