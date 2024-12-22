@@ -4,7 +4,8 @@ import re
 import logging
 import requests
 import spacy
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect
+from flask_babel import Babel, _
 from werkzeug.utils import secure_filename
 from google.cloud import vision
 from PIL import Image
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 VISION_CLIENT = vision.ImageAnnotatorClient()
 GEOCODING_API_KEY = os.getenv('GEOCODING_API_KEY')
@@ -31,6 +33,37 @@ CUSTOM_SEARCH_JSON_API = os.getenv('CUSTOM_SEARCH_JSON_API')
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Çoklu dil desteği
+LANGUAGES = {
+    'tr': 'Türkçe',
+    'en': 'English',
+    'de': 'Deutsch',
+    'es': 'Español',
+    'ru': 'Русский'
+}
+
+babel = Babel()
+
+def get_locale():
+    return session.get('lang', request.accept_languages.best_match(LANGUAGES.keys()))
+
+babel.init_app(app, locale_selector=get_locale)
+
+@app.context_processor
+def inject_locale():
+    return dict(get_locale=get_locale)
+
+app.config['BABEL_DEFAULT_LOCALE'] = 'tr'
+
+@app.route('/set_language', methods=['POST'])
+def set_language():
+    language = request.form.get('language')
+    if language in LANGUAGES:
+        session['lang'] = language
+    print("Session güncellendi:", session)
+    return redirect(request.referrer)
+# Çoklu dil desteği
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -58,12 +91,8 @@ def index():
 
             # 2.1. OCR ile metin algılama ve yer bilgisi bulma
             ocr_data = analyze_image_with_ocr(filepath)
-            if 'text' in ocr_data:
-                cleaned_text = clean_text_for_query(ocr_data['text'])
-                print(f"\033[94mAlgılanan Metin: {ocr_data['text']}\033[0m")
-
-                # 2.2. Places API ile analiz
-                place_details = get_place_details(cleaned_text, PLACES_API_KEY)
+            if ocr_data:  # OCR sonucu geçerli ise
+                place_details = get_place_details(ocr_data['cleaned_text'], PLACES_API_KEY)
                 if 'place_id' in place_details:
                     detailed_place = get_place_details_from_id(place_details['place_id'], PLACES_API_KEY)
                     if detailed_place:
@@ -73,7 +102,7 @@ def index():
                 else:
                     print("\033[93mPlaces API ile yer bulma başarısız. Diğer yöntemlere geçiliyor…\033[0m")
             else:
-                print("\033[93mOCR ile metin algılama başarısız. Diğer yöntemlere geçiliyor…\033[0m")
+                print("\033[93mOCR ile yeterli metin algılanamadı, diğer yöntemlere geçiliyor...\033[0m")
 
             # 3. Vision API ile analiz
             vision_data = analyze_image(filepath)
@@ -82,8 +111,8 @@ def index():
                 satellite_image_url = get_satellite_image_url(vision_data['latitude'], vision_data['longitude'])
                 return render_template('sonuc.html', place_info=vision_data, satellite_image_url=satellite_image_url)
             else:
-                print("\033[93mVision API ile yer bulma başarısız.\033[0m")
-                
+                print("\033[93mVision API ile yer bulma başarısız. Diğer yöntemlere geçiliyor...\033[0m")
+
             # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
             if any(vision_data.get(key) is None for key in ('description', 'latitude', 'longitude', 'address')):
                 print("\033[93mSonuçlar yetersiz, Web Detection işleme geçiliyor.\033[0m")
@@ -97,12 +126,14 @@ def index():
             # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
             print("\033[93mAnaliz tamamlandı ancak sonuç bulunamadı. Daha sade veya spesifik bir metin kullanmayı deneyin.\033[0m")
+
         finally:
             if os.path.exists(filepath):
                 # Yüklenen fotoğraflar analiz tamamlanınca yer kaplamamak için silinir.
                 os.remove(filepath)
 
     return render_template('index.html')
+
 
 # EXIF verilerini çekme
 def extract_exif(filepath):
@@ -412,36 +443,37 @@ def analyze_image_with_ocr(filepath):
         texts = response.text_annotations
         
         if texts:
-            detected_text = texts[0].description
+            detected_text = texts[0].description.strip()
             
-            # Eğer algılanan metin 2 veya daha az karakter uzunluğundaysa, hemen çık
+            # Eğer algılanan metin 2 veya daha az karakter uzunluğundaysa, None döner
             if len(detected_text) <= 2:
-                print("\033[93mAlgılanan metin 2 veya daha az karakter uzunluğunda, atlanıyor.\033[0m")
-                return {'error': 'Metin 2 veya daha az karakter uzunluğunda olduğu için geçersiz.'}
+                print("\033[93mAlgılanan metin 2 veya daha az karakter uzunluğunda, diğer yöntemlere geçiliyor...\033[0m")
+                return None  # İşlem burada kesilmez, çağıran fonksiyon diğer yönteme geçer
             
             # NLP uygulama
             doc = nlp(detected_text)
 
-            # Temizleme işlemleri
+            # Temizleme işlemleri (bu adımda kısa kelimeleri filtreler)
             cleaned_text = clean_text_for_query(detected_text)
 
-            # Varlık tanıma
-            entities = [(ent.text, ent.label_) for ent in doc.ents]
+            # Varlık tanıma, ancak kısa kelimeleri (2 karakterden az) filtreleyelim
+            entities = [(ent.text, ent.label_) for ent in doc.ents if len(ent.text) > 2]
             print("\033[92mVarlıklar:\033[0m", entities)
 
             # Anahtar kelimeleri bulma ve 2 veya daha az karakterli kelimeleri filtreleme
-            keywords = set(token.lemma_ for token in doc if token.is_alpha and not token.is_stop and len(token.lemma_) > 2)
+            keywords = {token.lemma_ for token in doc if token.is_alpha and not token.is_stop and len(token.lemma_) > 2}
             print("\033[92mAnahtar Kelimeler:\033[0m", keywords)
 
             return {'text': detected_text, 'cleaned_text': cleaned_text, 'entities': entities, 'keywords': list(keywords)}
         else:
-            return {'error': 'Metin algılanamadı'}
+            print("\033[93mMetin algılanamadı, diğer yöntemlere geçiliyor...\033[0m")
+            return None
     except Exception as e:
-        print(f"OCR işlemi sırasında hata: {e}")
-        return {'error': 'OCR işlemi başarısız'}
+        print(f"\033[91mOCR işlemi sırasında hata: {e}\033[0m")
+        return None
 
 def clean_text_for_query(text):
-    return ' '.join(word for word in text.split() if word.isalnum())
+    return ' '.join(word for word in text.split() if word.isalnum() and len(word) > 2)
 
 # Places API ile yer bilgisi almak için burada…
 
