@@ -99,9 +99,9 @@ The following libraries are required for this project:
 places-api-project/
 ├── app.py            # Standard Places API implementation
 ├── appv2.py          # New Places API implementation
-├── templates/        # HTML templates
-├── translations/     # Language files
-├── static/           # Static files (CSS, images)
+├── templates/        # HTML templates folder
+├── translations/     # Language files folder
+├── static/           # Static files folder (CSS, images)
 ├── uploads/          # Temporary folder for uploaded images (automatically generated, no need to create it yourself)
 ├── .env              # Environment variables
 ├── requirements.txt  # Python libraries
