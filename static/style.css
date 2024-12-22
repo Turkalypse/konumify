@@ -229,7 +229,7 @@ footer {
 
 .dil-secici select:focus {
     outline: none;
-    border-color: #00bcd4;
+    border-color: #ff8f8f;
     background-color: #444;
 }
 
@@ -243,7 +243,7 @@ footer {
 }
 
 .dil-secici option:checked {
-    background-color: #00bcd4;
+    background-color: #ff8f8f;
     color: #121212;
 }
 
