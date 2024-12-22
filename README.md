@@ -121,6 +121,6 @@ Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dos
 Katkılar memnuniyetle karşılanır! Depoyu fork'layarak, bir özellik dalı oluşturarak ve bir pull request göndererek katkıda bulunabilirsiniz.
 
 ## Örnek
-# ![KonumifyIndex](https://i.ibb.co/W5fZDbv/Rijksmuseum-IC.jpg)
-# ![KonumifyIndex](https://i.ibb.co/kG853Tx/index.jpg)
-# ![KonumifyResult](https://i.ibb.co/kKnrSK8/result.jpg)
+![KonumifyIndex](https://i.ibb.co/W5fZDbv/Rijksmuseum-IC.jpg)
+![KonumifyIndex](https://i.ibb.co/kG853Tx/index.jpg)
+![KonumifyResult](https://i.ibb.co/kKnrSK8/result.jpg)
