@@ -34,7 +34,7 @@ Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden 
 ### Kullanılan API'ler
 
 - [Google Cloud Vision API](https://cloud.google.com/vision/docs): Görsel analizi için.
-- **Google Places API**:
+- [Google Places API](https://developers.google.com/maps/documentation/places/web-service/choose-api):
   - `app.py` [standart sürüm](https://developers.google.com/maps/documentation/places/web-service/).
   - `appv2.py` [yeni sürüm](https://developers.google.com/maps/documentation/places/web-service/op-overview).
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Koordinatları adreslere dönüştürmek için.
