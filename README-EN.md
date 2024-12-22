@@ -103,7 +103,7 @@ places-api-project/
 ├── translations/     # Language files
 ├── static/           # Static files (CSS, JS, images)
 ├── uploads/          # Temporary folder for uploaded images
-├── .env              # Environment variables (not included in the repository)
+├── .env              # Environment variables
 ├── requirements.txt  # Python dependencies
 └── README.md         # Project documentation
 ```
