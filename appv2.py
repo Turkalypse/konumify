@@ -4,7 +4,8 @@ import re
 import logging
 import requests
 import spacy
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect
+from flask_babel import Babel, _
 from werkzeug.utils import secure_filename
 from google.cloud import vision
 from PIL import Image
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 VISION_CLIENT = vision.ImageAnnotatorClient()
 GEOCODING_API_KEY = os.getenv('GEOCODING_API_KEY')
@@ -31,6 +33,37 @@ CUSTOM_SEARCH_JSON_API = os.getenv('CUSTOM_SEARCH_JSON_API')
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Çoklu dil desteği
+LANGUAGES = {
+    'tr': 'Türkçe',
+    'en': 'English',
+    'de': 'Deutsch',
+    'es': 'Español',
+    'ru': 'Русский'
+}
+
+babel = Babel()
+
+def get_locale():
+    return session.get('lang', request.accept_languages.best_match(LANGUAGES.keys()))
+
+babel.init_app(app, locale_selector=get_locale)
+
+@app.context_processor
+def inject_locale():
+    return dict(get_locale=get_locale)
+
+app.config['BABEL_DEFAULT_LOCALE'] = 'tr'
+
+@app.route('/set_language', methods=['POST'])
+def set_language():
+    language = request.form.get('language')
+    if language in LANGUAGES:
+        session['lang'] = language
+    print("Session güncellendi:", session)
+    return redirect(request.referrer)
+# Çoklu dil desteği
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
