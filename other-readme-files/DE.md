@@ -1,4 +1,4 @@
-![KonumifyLogosu](../static/konumify.png)
+![KonumifyLogo](../static/konumify.png)
 
 Dieses Repository enthält zwei Versionen einer Flask-Anwendung, die Google Cloud-Dienste nutzt, um Bilddateien zu analysieren und ortsbezogene Informationen zu extrahieren. Der Hauptunterschied zwischen den beiden Versionen liegt in der Implementierung der Places API:
 
@@ -120,6 +120,6 @@ Dieses Projekt ist unter der MIT-Lizenz lizenziert. Siehe die [LICENSE](LICENSE)
 Beiträge sind willkommen! Fühlen Sie sich frei, das Repository zu forken, einen Feature-Branch zu erstellen und einen Pull-Request einzureichen.
 
 ## Beispiel
-![KonumifyPhoto](https://i.ibb.co/mCVBrKS/GATE.jpg)
-![KonumifyIndex](https://i.ibb.co/SfzyrF2/1-de.png)
-![KonumifyResult](https://i.ibb.co/Px1MkmN/2-de.png)
+![KonumifyFoto](https://i.ibb.co/mCVBrKS/GATE.jpg)
+![KonumifyIndex](https://i.ibb.co/nB5jCJq/1-de.png)
+![KonumifyErgebnis](https://i.ibb.co/SBXbhCL/2-de.png)
