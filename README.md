@@ -1,4 +1,4 @@
-# [Click to access the English README](README-EN.md)
+# [Click to access the English README](another-readme-files/EN.md)
 
 ![KonumifyLogosu](static/konumify.png)
 
