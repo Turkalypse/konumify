@@ -1,4 +1,4 @@
-![KonumifyLogosu](../static/konumify.png)
+![ЛоготипKonumify](../static/konumify.png)
 
 Этот репозиторий содержит две версии приложения Flask, которое использует сервисы Google Cloud для анализа изображений и извлечения информации, связанной с местоположением. Основное различие между двумя версиями заключается в реализации API Places:
 
@@ -120,6 +120,6 @@ places-api-project/
 Приветствуются любые вклады! Не стесняйтесь форкнуть репозиторий, создать ветку для новой функции и отправить pull request.
 
 ## Пример
-![KonumifyPhoto](https://i.ibb.co/R7srhNY/REDSQ.jpg)
-![KonumifyIndex](https://i.ibb.co/FsV64z0/1-ru.png)
-![KonumifyResult](https://i.ibb.co/Ss1by98/2-ru.png)
+![ФотографияKonumify](https://i.ibb.co/R7srhNY/REDSQ.jpg)
+![KonumifyIndex](https://i.ibb.co/dpnTRRh/1-ru.png)
+![РезультатKonumify](https://i.ibb.co/NyYfvMF/2-ru.png)
