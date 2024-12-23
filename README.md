@@ -1,4 +1,4 @@
-# [Click for README files in other languages.](another-readme-files/)
+# [Click for README files in other languages.](other-readme-files/)
 
 ![KonumifyLogosu](static/konumify.png)
 
