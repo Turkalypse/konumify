@@ -3,7 +3,7 @@
 Dieses Repository enthält zwei Versionen einer Flask-Anwendung, die Google Cloud-Dienste nutzt, um Bilddateien zu analysieren und ortsbezogene Informationen zu extrahieren. Der Hauptunterschied zwischen den beiden Versionen liegt in der Implementierung der Places API:
 
 - `app.py`: Verwendet die Places API.
-- `appv2.py`: Nutzt die Places API (New).
+- `appv2.py`: Nutzt die Places API (Neu).
 
 ---
 
@@ -34,7 +34,7 @@ Dieses Repository enthält zwei Versionen einer Flask-Anwendung, die Google Clou
 - [Google Cloud Vision API](https://cloud.google.com/vision/docs): Für die Bildanalyse.
 - [Google Places API](https://developers.google.com/maps/documentation/places/web-service/choose-api):
   - [Standardversion](https://developers.google.com/maps/documentation/places/web-service/search) `app.py`.
-  - [New Version](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
+  - [Neu Version](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Für die Umkehrgeokodierung von Koordinaten zu Adressen.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Für die Erstellung von Satellitenkartenbildern.
 - [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): Für keywordbasierte Websuchen.
@@ -84,7 +84,7 @@ Die folgenden Bibliotheken sind für dieses Projekt erforderlich:
 1. Starten Sie die Anwendung:
    ```bash
    python app.py  # Für Places API
-   python appv2.py  # Für Places API (New)
+   python appv2.py  # Für Places API (Neu)
    ```
 
 2. Öffnen Sie einen Browser und navigieren Sie zu `http://127.0.0.1:5000`.
