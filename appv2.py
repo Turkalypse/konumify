@@ -445,9 +445,9 @@ def analyze_image_with_ocr(filepath):
         if texts:
             detected_text = texts[0].description.strip()
             
-            # Eğer algılanan metin 2 veya daha az karakter uzunluğundaysa, None döner
-            if len(detected_text) <= 2:
-                print("\033[93mAlgılanan metin 2 veya daha az karakter uzunluğunda, diğer yöntemlere geçiliyor...\033[0m")
+            # Eğer algılanan metin 3 veya daha az karakter uzunluğundaysa, None döner
+            if len(detected_text) <= 3:
+                print("\033[93mAlgılanan metin 3 veya daha az karakter uzunluğunda, diğer yöntemlere geçiliyor...\033[0m")
                 return None  # İşlem burada kesilmez, çağıran fonksiyon diğer yönteme geçer
             
             # NLP uygulama
@@ -457,11 +457,11 @@ def analyze_image_with_ocr(filepath):
             cleaned_text = clean_text_for_query(detected_text)
 
             # Varlık tanıma, ancak kısa kelimeleri (2 karakterden az) filtreleyelim
-            entities = [(ent.text, ent.label_) for ent in doc.ents if len(ent.text) > 2]
+            entities = [(ent.text, ent.label_) for ent in doc.ents if len(ent.text) > 3]
             print("\033[92mVarlıklar:\033[0m", entities)
 
             # Anahtar kelimeleri bulma ve 2 veya daha az karakterli kelimeleri filtreleme
-            keywords = {token.lemma_ for token in doc if token.is_alpha and not token.is_stop and len(token.lemma_) > 2}
+            keywords = {token.lemma_ for token in doc if token.is_alpha and not token.is_stop and len(token.lemma_) > 3}
             print("\033[92mAnahtar Kelimeler:\033[0m", keywords)
 
             return {'text': detected_text, 'cleaned_text': cleaned_text, 'entities': entities, 'keywords': list(keywords)}
@@ -473,7 +473,7 @@ def analyze_image_with_ocr(filepath):
         return None
 
 def clean_text_for_query(text):
-    return ' '.join(word for word in text.split() if word.isalnum() and len(word) > 2)
+    return ' '.join(word for word in text.split() if word.isalnum() and len(word) > 3)
 
 # Places API ile yer bilgisi almak için burada…
 
