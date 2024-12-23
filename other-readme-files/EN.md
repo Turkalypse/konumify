@@ -121,5 +121,5 @@ Contributions are welcome! Feel free to fork the repository, create a feature br
 
 ## Sample
 ![KonumifyPhoto](https://i.ibb.co/GxJFR1z/BRITISHMUSEUM.jpg)
-![KonumifyIndex](https://i.ibb.co/gyWKT2s/1-en.png)
-![KonumifyResult](https://i.ibb.co/xFfxfMC/2-en.png)
+![KonumifyIndex](https://i.ibb.co/SNJ4Yz2/1-en.png)
+![KonumifyResult](https://i.ibb.co/DDzctdD/2-en.png)
