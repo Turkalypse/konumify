@@ -120,6 +120,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 Contributions are welcome! Feel free to fork the repository, create a feature branch, and submit a pull request.
 
 ## Sample
-![KonumifyPhoto](https://i.ibb.co/2FkwxF5/FSM.jpg)
-![KonumifyIndex](https://i.ibb.co/2knRqmP/1-en.jpg)
-![KonumifyResult](https://i.ibb.co/NFxd2y8/2-en.jpg)
+![KonumifyPhoto](https://i.ibb.co/GxJFR1z/BRITISHMUSEUM.jpg)
+![KonumifyIndex](https://i.ibb.co/gyWKT2s/1-en.png)
+![KonumifyResult](https://i.ibb.co/xFfxfMC/2-en.png)
