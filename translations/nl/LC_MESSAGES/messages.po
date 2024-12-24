@@ -1,0 +1,79 @@
+# Dutch translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-24 09:03+0300\n"
+"PO-Revision-Date: 2024-12-24 09:04+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: nl\n"
+"Language-Team: nl <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: templates/bulunamadi.html:13
+msgid ""
+"Bu fotoğraf için tam olarak bir yer tespiti yapılamadı. Fakat bu "
+"fotoğrafın kaynağına inildiğinde sırasıyla"
+msgstr ""
+"Van deze foto kon geen exacte locatie worden vastgesteld. Toen de "
+"bron van deze foto werd geanalyseerd, werd echter vastgesteld dat de woorden"
+
+#: templates/bulunamadi.html:15
+msgid "kelimelerinin çoğunlukta olduğu belirlendi."
+msgstr "respectievelijk in de meerderheid waren."
+
+#: templates/bulunamadi.html:17
+msgid "Bu fotoğraftaki yerin, bu üç sonuçla bağlantılı olması muhtemel."
+msgstr "Het is waarschijnlijk dat de locatie in deze foto gerelateerd is aan deze drie resultaten."
+
+#: templates/bulunamadi.html:19 templates/sonuc.html:30
+msgid "Başka bir fotoğrafı analiz et"
+msgstr "Analyseer een andere foto"
+
+#: templates/index.html:15
+msgid "Fotoğrafı buraya sürükleyin veya "
+msgstr "Sleep de foto hierheen of "
+
+#: templates/index.html:15
+msgid "elle seçin"
+msgstr "selecteer handmatig"
+
+#: templates/index.html:19
+msgid "Analiz et"
+msgstr "Analyseer"
+
+#: templates/index.html:77
+msgid "Seçilen dosya: "
+msgstr "Geselecteerd bestand: "
+
+#: templates/sonuc.html:15
+msgid "Yer:"
+msgstr "Locatie:"
+
+#: templates/sonuc.html:16
+msgid "Enlem:"
+msgstr "Breedtegraad:"
+
+#: templates/sonuc.html:17
+msgid "Boylam:"
+msgstr "Lengtegraad:"
+
+#: templates/sonuc.html:18
+msgid "Adres:"
+msgstr "Adres:"
+
+#: templates/sonuc.html:21
+msgid "Uydu görüntüsü"
+msgstr "Satellietbeeld"
+
+#: templates/sonuc.html:26
+msgid "Google Haritalar ile görüntüle"
+msgstr "Bekijk op Google Maps"
