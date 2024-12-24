@@ -42,7 +42,8 @@ LANGUAGES = {
     'nl': 'Nederlands',
     'es': 'Español',
     'ru': 'Русский',
-    'hi': 'हिन्दी'
+    'hi': 'हिन्दी',
+    'zh': '中文'
 }
 
 babel = Babel()
