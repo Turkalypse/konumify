@@ -40,7 +40,8 @@ LANGUAGES = {
     'en': 'English',
     'de': 'Deutsch',
     'es': 'Español',
-    'ru': 'Русский'
+    'ru': 'Русский',
+    'hi': 'हिन्दी'
 }
 
 babel = Babel()
