@@ -70,8 +70,8 @@ Se requieren las siguientes librerías para este proyecto:
 4. Configura tus credenciales de Google Cloud:
    - Crea un archivo `.env` en el directorio del proyecto con las siguientes claves:
      ```env
-     FLASK_SECRET_KEY=YOUR_SECRET_KEY # Crear con flask_secret_key_maker.py
-     GOOGLE_APPLICATION_CREDENTIALS=json-file-name.json
+     FLASK_SECRET_KEY=TU_CLAVE_SECRETA # Crear con flask_secret_key_maker.py
+     GOOGLE_APPLICATION_CREDENTIALS=nombre-archivo-json.json
      GEOCODING_API_KEY=API_KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # Igual que GEOCODING_API_KEY
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # Igual que GEOCODING_API_KEY
