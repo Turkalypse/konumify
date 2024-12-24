@@ -3,7 +3,7 @@
 Этот репозиторий содержит две версии приложения Flask, которое использует сервисы Google Cloud для анализа изображений и извлечения информации, связанной с местоположением. Основное различие между двумя версиями заключается в реализации API Places:
 
 - `app.py`: Использует API Places.
-- `appv2.py`: Использует API Places (новая версия).
+- `appv2.py`: Использует API Places (новый).
 
 ---
 
@@ -34,7 +34,7 @@
 - [Google Cloud Vision API](https://cloud.google.com/vision/docs): Для анализа изображений.
 - [Google Places API](https://developers.google.com/maps/documentation/places/web-service/choose-api):
   - [Стандартная версия](https://developers.google.com/maps/documentation/places/web-service/search) `app.py`.
-  - [Новая версия](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
+  - [новый](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Для обратного геокодирования координат в адреса.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Для создания спутниковых изображений карт.
 - [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): Для поиска в интернете по ключевым словам.
@@ -84,7 +84,7 @@
 1. Запустите приложение:
    ```bash
    python app.py  # Для API Places
-   python appv2.py  # Для API Places (новая версия)
+   python appv2.py  # Для API Places (новый)
    ```
 
 2. Откройте браузер и перейдите по адресу `http://127.0.0.1:5000`.
