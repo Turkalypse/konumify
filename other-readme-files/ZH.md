@@ -120,6 +120,6 @@ places-api-project/
 欢迎贡献！您可以分支仓库，创建新功能分支，并提交一个拓展请求。
 
 ## 示例
-![KonumifyPhoto](https://i.ibb.co/MnttvPy/FCITY.jpg)
+![Konumify照片](https://i.ibb.co/MnttvPy/FCITY.jpg)
 ![KonumifyIndex](https://i.ibb.co/T0q3KJ0/1-zh.png)
-![KonumifyResult](https://i.ibb.co/Btdntn3/2-zh.png)
+![Konumify结果](https://i.ibb.co/Btdntn3/2-zh.png)
