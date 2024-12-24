@@ -70,8 +70,8 @@
 4. Настройте учетные данные Google Cloud:
    - Создайте файл `.env` в каталоге проекта с следующими ключами:
      ```env
-     FLASK_SECRET_KEY=YOUR_SECRET_KEY # Создайте с помощью flask_secret_key_maker.py
-     GOOGLE_APPLICATION_CREDENTIALS=json-file-name.json
+     FLASK_SECRET_KEY=ВАШ_СЕКРЕТНЫЙ_КЛЮЧ # Создайте с помощью flask_secret_key_maker.py
+     GOOGLE_APPLICATION_CREDENTIALS=json-файл-имя.json
      GEOCODING_API_KEY=API_KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # Совпадает с GEOCODING_API_KEY
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # Совпадает с GEOCODING_API_KEY
