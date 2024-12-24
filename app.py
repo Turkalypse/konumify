@@ -39,6 +39,7 @@ LANGUAGES = {
     'tr': 'Türkçe',
     'en': 'English',
     'de': 'Deutsch',
+    'nl': 'Nederlands',
     'es': 'Español',
     'ru': 'Русский',
     'hi': 'हिन्दी'
