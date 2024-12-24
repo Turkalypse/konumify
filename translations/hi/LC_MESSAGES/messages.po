@@ -1,0 +1,79 @@
+# Hindi translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-12-24 08:44+0300\n"
+"PO-Revision-Date: 2024-12-24 08:44+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: hi\n"
+"Language-Team: hi <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: templates/bulunamadi.html:13
+msgid ""
+"Bu fotoğraf için tam olarak bir yer tespiti yapılamadı. Fakat bu "
+"fotoğrafın kaynağına inildiğinde sırasıyla"
+msgstr ""
+"इस फोटो के लिए सटीक स्थान पहचान नहीं की जा सकी। हालांकि, जब इस "
+"फोटो के स्रोत को देखा गया तो क्रमशः"
+
+#: templates/bulunamadi.html:15
+msgid "kelimelerinin çoğunlukta olduğu belirlendi."
+msgstr "यह निर्धारित किया गया कि इसमें अधिकतर शब्द इन थे।"
+
+#: templates/bulunamadi.html:17
+msgid "Bu fotoğraftaki yerin, bu üç sonuçla bağlantılı olması muhtemel."
+msgstr "संभव है कि इस फ़ोटो का स्थान इन तीन परिणामों से संबंधित हो."
+
+#: templates/bulunamadi.html:19 templates/sonuc.html:30
+msgid "Başka bir fotoğrafı analiz et"
+msgstr "किसी अन्य फ़ोटो का विश्लेषण करें"
+
+#: templates/index.html:15
+msgid "Fotoğrafı buraya sürükleyin veya "
+msgstr "फ़ोटो को यहां खींचें या"
+
+#: templates/index.html:15
+msgid "elle seçin"
+msgstr "मैन्युअल रूप से चुनें"
+
+#: templates/index.html:19
+msgid "Analiz et"
+msgstr "विश्लेषण करें"
+
+#: templates/index.html:76
+msgid "Seçilen dosya: "
+msgstr "चुनी गई फ़ाइल: "
+
+#: templates/sonuc.html:15
+msgid "Yer:"
+msgstr "स्थान:"
+
+#: templates/sonuc.html:16
+msgid "Enlem:"
+msgstr "अक्षांश:"
+
+#: templates/sonuc.html:17
+msgid "Boylam:"
+msgstr "देशांतर:"
+
+#: templates/sonuc.html:18
+msgid "Adres:"
+msgstr "पता:"
+
+#: templates/sonuc.html:21
+msgid "Uydu görüntüsü"
+msgstr "सैटेलाइट इमेजरी"
+
+#: templates/sonuc.html:26
+msgid "Google Haritalar ile görüntüle"
+msgstr "गूगल मैप्स पर देखें"
