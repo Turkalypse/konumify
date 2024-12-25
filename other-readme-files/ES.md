@@ -19,7 +19,7 @@ Este repositorio contiene dos versiones de una aplicación Flask que utiliza los
    - `appv2.py` adopta los nuevos puntos finales y métodos de la API de Places para mayor precisión.
 
 3. **Soporte multilingüe**:
-   - La aplicación admite varios idiomas (turco, inglés, alemán, español, ruso).
+   - Se admiten los idiomas turco, inglés, alemán, español, hindi, japonés, neerlandés, ruso y chino.
    - La selección de idioma se gestiona mediante Flask-Babel.
 
 4. **Mapas satelitales dinámicos**:
