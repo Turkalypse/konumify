@@ -19,7 +19,7 @@ This repository contains two versions of a Flask application that utilizes Googl
    - `appv2.py` adopts the new Places API endpoints and methods for enhanced accuracy.
 
 3. **Multi-language Support**:
-   - Application supports multiple languages (Turkish, English, German, Spanish, Russian).
+   - Turkish, English, German, Spanish, Hindi, Japanese, Dutch, Russian, and Chinese languages are supported.
    - Language selection is handled via Flask-Babel.
 
 4. **Dynamic Satellite Maps**:
