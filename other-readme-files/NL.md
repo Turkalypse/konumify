@@ -19,7 +19,7 @@ Deze repository bevat twee versies van een Flask-applicatie die Google Cloud-ser
    - `appv2.py` maakt gebruik van de nieuwe eindpunten en methoden van de Places API voor verbeterde nauwkeurigheid.
 
 3. **Meertalige ondersteuning**:
-   - De applicatie ondersteunt meerdere talen (Turks, Engels, Duits, Spaans, Russisch, Nederlands).
+   - De talen Turks, Engels, Duits, Spaans, Hindi, Japans, Nederlands, Russisch en Chinees worden ondersteund.
    - Taalkeuze wordt beheerd via Flask-Babel.
 
 4. **Dynamische satellietkaarten**:
