@@ -21,7 +21,7 @@ Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden 
    - `appv2.py`, gelişmiş doğruluk için yeni Places API uç noktalarını ve yöntemlerini benimser.
 
 3. **Çok Dilli Destek**:
-   - Uygulama, Türkçe, İngilizce, Almanca, İspanyolca, Rusça gibi birden fazla dili destekler.
+   - Türkçe, İngilizce, Almanca, İspanyolca, Hintçe, Japonca, Felemenkçe, Rusça ve Çince dilleri desteklenmektedir.
    - Dil seçimi Flask-Babel aracılığıyla gerçekleştirilir.
 
 4. **Dinamik Uydu Haritaları**:
