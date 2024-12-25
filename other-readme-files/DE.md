@@ -19,7 +19,7 @@ Dieses Repository enthält zwei Versionen einer Flask-Anwendung, die Google Clou
    - `appv2.py` verwendet die neuen Endpunkte und Methoden der Places API für verbesserte Genauigkeit.
 
 3. **Mehrsprachige Unterstützung**:
-   - Die Anwendung unterstützt mehrere Sprachen (Türkisch, Englisch, Deutsch, Spanisch, Russisch).
+   - Türkisch, Englisch, Deutsch, Spanisch, Hindi, Japanisch, Niederländisch, Russisch und Chinesisch werden unterstützt.
    - Die Sprachauswahl wird über Flask-Babel gehandhabt.
 
 4. **Dynamische Satellitenkarten**:
