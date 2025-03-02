@@ -59,8 +59,8 @@ Se requieren las siguientes librerías para este proyecto:
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/yourusername/places-api-project.git
-   cd places-api-project
+   git clone https://github.com/Turkalypse/konumify
+   cd konumify
    ```
 
 2. Instala las dependencias:
