@@ -40,7 +40,7 @@ Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden 
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Koordinatları adreslere dönüştürmek için.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Uydu haritaları oluşturmak için.
 - [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): Anahtar kelime tabanlı web aramaları için.
-  - Arama motoru kimliği için lazım (yani CX değeri). "Resim arama" ve "Tüm web'de ara" açık olmalı. "Bölge", Türkiye tavsiye edilir.
+  - Arama motoru kimliği için lazım (yani CX değeri). "Resim arama" ve "Tüm web'de ara" açık olmalı. "Bölge" için kendi ülkeniz tavsiye edilir.
 
 ### Python Kütüphaneleri
 
