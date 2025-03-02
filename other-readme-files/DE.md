@@ -62,9 +62,14 @@ Die folgenden Bibliotheken sind für dieses Projekt erforderlich:
    cd places-api-project
    ```
 
-3. Installieren Sie die Abhängigkeiten:
+2. Installieren Sie die Abhängigkeiten:
    ```bash
    pip install -r requirements.txt
+   ```
+
+3. Installieren Sie das en_core_web_sm Modell:
+   ```bash
+   python -m spacy download en_core_web_sm
    ```
 
 4. Richten Sie Ihre Google Cloud-Anmeldedaten ein:
@@ -115,11 +120,7 @@ Dieses Projekt ist unter der MIT-Lizenz lizenziert. Siehe die [LICENSE](LICENSE)
 
 ---
 
-## Beiträge
-
-Beiträge sind willkommen! Fühlen Sie sich frei, das Repository zu forken, einen Feature-Branch zu erstellen und einen Pull-Request einzureichen.
-
 ## Beispiel
-![KonumifyFoto](https://i.ibb.co/mCVBrKS/GATE.jpg)
-![KonumifyIndex](https://i.ibb.co/nB5jCJq/1-de.png)
-![KonumifyErgebnis](https://i.ibb.co/SBXbhCL/2-de.png)
+![KonumifyFoto](https://i.imgur.com/6zgPIs9.png)
+![KonumifyIndex](https://i.imgur.com/2Rc1OkD.png)
+![KonumifyErgebnis](https://i.imgur.com/uzsVpj0.png)
