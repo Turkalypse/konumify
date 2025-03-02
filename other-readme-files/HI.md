@@ -37,7 +37,8 @@
   - [नया संस्करण](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`।
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): कोऑर्डिनेट्स को पते में बदलने के लिए।
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): सैटेलाइट मैप चित्र बनाने के लिए।
-- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): कीवर्ड आधारित वेब खोजों के लिए।
+- [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): कीवर्ड आधारित वेब खोजों के लिए।
+  - सर्च इंजन का आईडी के लिए आवश्यक है (यानी CX मान)। "इमेज सर्च" और "पूरे वेब पर खोजें" को सक्षम होना चाहिए। "क्षेत्र" के लिए अपना देश अनुशंसित है।.
 
 ### पायथन लाइब्रेरीज़
 
@@ -75,11 +76,12 @@
 4. अपनी Google Cloud क्रेडेंशियल्स सेट करें:
    - प्रोजेक्ट डायरेक्टरी में `.env` फ़ाइल बनाएं और निम्नलिखित कुंजियों को जोड़ें:
      ```env
-     FLASK_SECRET_KEY=आपकी_गुप्त_कुंजी # flask_secret_key_maker.py का उपयोग करके बनाएँ
+     FLASK_SECRET_KEY=आपकी-गुप्त-कुंजी # flask_secret_key_maker.py का उपयोग करके बनाएँ
      GOOGLE_APPLICATION_CREDENTIALS=json-फ़ाइल-नाम.json
-     GEOCODING_API_KEY=API_KEY
+     GEOCODING_API_KEY=आपकी-API-KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # GEOCODING_API_KEY के समान
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # GEOCODING_API_KEY के समान
+     CUSTOM_SEARCH_ENGINE_ID=आपकी-सर्च-इंजन-का-आईडी
      ```
 
 ---
