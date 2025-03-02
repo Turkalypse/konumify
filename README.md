@@ -69,7 +69,12 @@ Bu projede aşağıdaki kütüphaneler gereklidir:
    pip install -r requirements.txt
    ```
 
-3. Google Cloud kimlik bilgilerinizi ayarlayın:
+3. en_core_web_sm dil modelini yükleyin:
+   ```bash
+   python -m spacy download en_core_web_sm
+   ```
+
+4. Google Cloud kimlik bilgilerinizi ayarlayın:
    - Proje dizininde `.env` dosyasındaki aşağıdaki gerekli yerleri düzenleyin:
      ```env
      FLASK_SECRET_KEY=GİZLİ_ANAHTAR # flask_secret_key_maker.py dosyasıyla bir tane oluşturun
@@ -117,11 +122,7 @@ Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için [LICENSE](L
 
 ---
 
-## Katkılar
-
-Katkılar memnuniyetle karşılanır! Depoyu fork'layarak, bir özellik dalı oluşturarak ve bir pull request göndererek katkıda bulunabilirsiniz.
-
 ## Örnek
-![KonumifyFotograf](https://i.ibb.co/2FkwxF5/FSM.jpg)
-![KonumifyIndex](https://i.ibb.co/LSKbBqR/1-tr.jpg)
-![KonumifySonuc](https://i.ibb.co/9hvrDMR/2-tr.jpg)
+![KonumifyFotograf](https://fastly.4sqi.net/img/general/600x600/45583077_Ic3Vbs8YTsu2SoeJyPccC_2xxZTDcTVCwU3Y1fUbBDo.jpg)
+![KonumifyIndex](https://i.hizliresim.com/f52cuk5.png)
+![KonumifySonuc](https://i.hizliresim.com/pmov8hj.png)
