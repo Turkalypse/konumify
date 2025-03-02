@@ -37,7 +37,8 @@ This repository contains two versions of a Flask application that utilizes Googl
   - [New version](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): For reverse geocoding coordinates to addresses.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): For generating satellite map images.
-- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): For keyword-based web searches.
+- [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): For keyword-based web searches.
+  - Search engine ID is required (i.e., the CX value). 'Image search' and 'Search the entire web' must be enabled. It is recommended to set your country for the 'Region'.
 
 ### Python Libraries
 
@@ -80,6 +81,7 @@ The following libraries are required for this project:
      GEOCODING_API_KEY=API_KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # Same with GEOCODING_API_KEY
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # Same with GEOCODING_API_KEY ile aynıdır
+     CUSTOM_SEARCH_ENGINE_ID=your-search-engine-ID
      ```
 
 ---
