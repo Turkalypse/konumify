@@ -123,6 +123,6 @@ Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için [LICENSE](L
 ---
 
 ## Örnek
-![KonumifyFotograf](https://fastly.4sqi.net/img/general/600x600/45583077_Ic3Vbs8YTsu2SoeJyPccC_2xxZTDcTVCwU3Y1fUbBDo.jpg)
-![KonumifyIndex](https://i.hizliresim.com/f52cuk5.png)
-![KonumifySonuc](https://i.hizliresim.com/pmov8hj.png)
+![KonumifyFotograf](https://i.imgur.com/Hkfhnqv.jpeg)
+![KonumifyIndex](https://i.imgur.com/ZVxcw74.png)
+![KonumifySonuc](https://i.imgur.com/E3niPzb.png)
