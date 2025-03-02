@@ -62,9 +62,14 @@ The following libraries are required for this project:
    cd places-api-project
    ```
 
-3. Install dependencies:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
+   ```
+
+3. Install the en_core_web_sm model:
+   ```bash
+   python -m spacy download en_core_web_sm
    ```
 
 4. Set up your Google Cloud credentials:
