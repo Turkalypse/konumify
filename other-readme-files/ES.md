@@ -37,7 +37,8 @@ Este repositorio contiene dos versiones de una aplicación Flask que utiliza los
   - [Nueva versión](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Para geocodificación inversa de coordenadas a direcciones.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Para generar imágenes de mapas satelitales.
-- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): Para búsquedas web basadas en palabras clave.
+- [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): Para búsquedas web basadas en palabras clave.
+  - Se necesita la identificación del motor de búsqueda (es decir, el valor CX). Deben estar habilitadas 'Búsqueda por imágenes' y 'Buscar en toda la Web'. Para 'Región', se recomienda su propio país.
 
 ### Librerías de Python
 
@@ -75,11 +76,12 @@ Se requieren las siguientes librerías para este proyecto:
 4. Configura tus credenciales de Google Cloud:
    - Crea un archivo `.env` en el directorio del proyecto con las siguientes claves:
      ```env
-     FLASK_SECRET_KEY=TU_CLAVE_SECRETA # Crear con flask_secret_key_maker.py
+     FLASK_SECRET_KEY=TU-CLAVE-SECRETA # Crear con flask_secret_key_maker.py
      GOOGLE_APPLICATION_CREDENTIALS=nombre-archivo-json.json
-     GEOCODING_API_KEY=API_KEY
+     GEOCODING_API_KEY=TU-API-KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # Igual que GEOCODING_API_KEY
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # Igual que GEOCODING_API_KEY
+     CUSTOM_SEARCH_ENGINE_ID=tu-id-de-buscador
      ```
 
 ---
