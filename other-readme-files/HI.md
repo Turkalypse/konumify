@@ -62,9 +62,14 @@
    cd places-api-project
    ```
 
-3. निर्भरताएँ इंस्टॉल करें:
+2. निर्भरताएँ इंस्टॉल करें:
    ```bash
    pip install -r requirements.txt
+   ```
+
+3. en_core_web_sm मॉडल को इंस्टॉल करें:
+   ```bash
+   python -m spacy download en_core_web_sm
    ```
 
 4. अपनी Google Cloud क्रेडेंशियल्स सेट करें:
@@ -115,11 +120,7 @@ places-api-project/
 
 ---
 
-## योगदान
-
-योगदान का स्वागत है! रिपॉजिटरी को फोर्क करें, एक फीचर ब्रांच बनाएं और पुल रिक्वेस्ट सबमिट करें।
-
 ## उदाहरण
-![Konumifyफ़ोटो](https://i.ibb.co/QCvq1k1/LTMP.jpg)
-![KonumifyIndex](https://i.ibb.co/W3dkXmY/1-hi.png)
-![Konumifyपरिणाम](https://i.ibb.co/ZJrF37r/2-hi.png)
+![Konumifyफ़ोटो](https://i.imgur.com/ovvhnKq.jpeg)
+![KonumifyIndex](https://i.imgur.com/2DP8HCz.png)
+![Konumifyपरिणाम](https://i.imgur.com/DUHpuXp.png)
