@@ -62,9 +62,14 @@
    cd places-api-project
    ```
 
-3. 依存関係をインストールします:
+2. 依存関係をインストールします:
    ```bash
    pip install -r requirements.txt
+   ```
+
+3. en_core_web_sm モデルをインストールします:
+   ```bash
+   python -m spacy download en_core_web_sm
    ```
 
 4. Google Cloud の証明情報を構築します:
@@ -115,11 +120,7 @@ places-api-project/
 
 ---
 
-## 貢献
-
-貢献は歓迎されます。ぜひリポジトリをフォークし、機能ブランチを作成し、プルリクエストを送信してください。
-
 ## サンプル
-![Konumify写真](https://i.ibb.co/tMyNj6x/TTOWER.jpg)
-![KonumifyIndex](https://i.ibb.co/bB0W0LP/1-ja.png)
-![Konumify結果](https://i.ibb.co/zGvV4w5/2-ja.png)
+![Konumify写真](https://i.imgur.com/8hYtkvJ.jpeg)
+![KonumifyIndex](https://i.imgur.com/W1WpAZ8.png)
+![Konumify結果](https://i.imgur.com/kb7Bxo0.png)
