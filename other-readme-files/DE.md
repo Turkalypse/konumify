@@ -38,7 +38,7 @@ Dieses Repository enthält zwei Versionen einer Flask-Anwendung, die Google Clou
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Für die Umkehrgeokodierung von Koordinaten zu Adressen.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Für die Erstellung von Satellitenkartenbildern.
 - [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): Für keywordbasierte Websuchen.
-  - Für die Suchmaschinen-ID wird der CX-Wert benötigt. 'Bildersuche' und 'Im gesamten Web suchen' müssen aktiviert sein. 'Region', die Deutschland wird empfohlen.
+  - Für die Suchmaschinen-ID wird der CX-Wert benötigt. 'Bildersuche' und 'Im gesamten Web suchen' müssen aktiviert sein. Für das Feld 'Region' wird empfohlen, Ihr eigenes Land einzugeben.
 
 ### Python-Bibliotheken
 
