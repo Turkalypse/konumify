@@ -76,12 +76,12 @@ Die folgenden Bibliotheken sind für dieses Projekt erforderlich:
 4. Richten Sie Ihre Google Cloud-Anmeldedaten ein:
    - Erstellen Sie eine `.env`-Datei im Projektverzeichnis mit den folgenden Schlüsseln:
      ```env
-     FLASK_SECRET_KEY=IHR_GEHEIMER_SCHLÜSSEL # Mit flask_secret_key_maker.py erstellen
+     FLASK_SECRET_KEY=IHR-GEHEIMER-SCHLÜSSEL # Mit flask_secret_key_maker.py erstellen
      GOOGLE_APPLICATION_CREDENTIALS=json-datei-name.json
-     GEOCODING_API_KEY=API_KEY
+     GEOCODING_API_KEY=IHR-API-KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # Identisch mit GEOCODING_API_KEY
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # Identisch mit GEOCODING_API_KEY
-     CUSTOM_SEARCH_ENGINE_ID=Suchmaschinen-ID
+     CUSTOM_SEARCH_ENGINE_ID=ihr-suchmaschinen-id
      ```
 
 ---
