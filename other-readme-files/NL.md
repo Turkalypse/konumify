@@ -62,9 +62,14 @@ De volgende bibliotheken zijn vereist voor dit project:
    cd places-api-project
    ```
 
-3. Installeer de vereisten:
+2. Installeer de vereisten:
    ```bash
    pip install -r requirements.txt
+   ```
+
+3. Het installeren van het en_core_web_sm model:
+   ```bash
+   python -m spacy download en_core_web_sm
    ```
 
 4. Stel je Google Cloud-referenties in:
@@ -115,11 +120,7 @@ Dit project is gelicentieerd onder de MIT-licentie. Zie het bestand [LICENSE](LI
 
 ---
 
-## Bijdragen
-
-Bijdragen zijn welkom! Voel je vrij om de repository te forken, een nieuwe functietak te maken en een pull request in te dienen.
-
 ## Voorbeeld
-![KonumifyFoto](https://i.ibb.co/fSNRsb9/ERSMS.jpg)
-![KonumifyIndex](https://i.ibb.co/2qkG8Jg/1-nl.png)
-![KonumifyResultaat](https://i.ibb.co/pj9J63Q/2-nl.png)
+![KonumifyFoto](https://i.imgur.com/TZCVYW6.jpeg)
+![KonumifyIndex](https://i.imgur.com/BReCTsI.png)
+![KonumifyResultaat](https://i.imgur.com/AzlyMez.png)
