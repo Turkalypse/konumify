@@ -487,6 +487,14 @@ def get_coordinates_from_description(description):
         print(f"\033[91mGeocoding API hatası:\033[0m {e}")
         return None
 
+# OCR kontrol kısmı
+def is_valid_text(text):
+    if re.match(r'^\d+$', text):
+        return False
+    if re.match(r'\d{4}[-/]\d{2}[-/]\d{2}', text):
+        return False
+    return True
+
 def analyze_image_with_ocr(filepath):
     try:
         with io.open(filepath, 'rb') as image_file:
@@ -498,9 +506,9 @@ def analyze_image_with_ocr(filepath):
         if texts:
             detected_text = texts[0].description.strip()
             
-            # Eğer algılanan metin 3 veya daha az karakter uzunluğundaysa, None döner
-            if len(detected_text) <= 3:
-                print("\033[93mAlgılanan metin 3 veya daha az karakter uzunluğunda, diğer yöntemlere geçiliyor...\033[0m")
+            # Eğer algılanan metin 3 veya daha az karakter uzunluğundaysa, geçersiz kabul etme
+            if len(detected_text) <= 3 or not is_valid_text(detected_text):
+                print("\033[93mGeçersiz metin tespit edildi, geçiliyor...\033[0m")
                 return None  # İşlem burada kesilmez, çağıran fonksiyon diğer yönteme geçer
             
             # NLP uygulama
@@ -509,11 +517,11 @@ def analyze_image_with_ocr(filepath):
             # Temizleme işlemleri (bu adımda kısa kelimeleri filtreler)
             cleaned_text = clean_text_for_query(detected_text)
 
-            # Varlık tanıma, ancak kısa kelimeleri (2 karakterden az) filtreleyelim
-            entities = [(ent.text, ent.label_) for ent in doc.ents if len(ent.text) > 3]
+            # Varlık tanıma, ancak kısa kelimeleri (3 karakterden az) filtreleyelim
+            entities = [(ent.text, ent.label_) for ent in doc.ents if len(ent.text) > 3 and not ent.text.isdigit()]
             print("\033[92mVarlıklar:\033[0m", entities)
 
-            # Anahtar kelimeleri bulma ve 2 veya daha az karakterli kelimeleri filtreleme
+            # Anahtar kelimeleri bulma ve 3 veya daha az karakterli kelimeleri filtreleme
             keywords = {token.lemma_ for token in doc if token.is_alpha and not token.is_stop and len(token.lemma_) > 3}
             print("\033[92mAnahtar Kelimeler:\033[0m", keywords)
 
@@ -527,6 +535,7 @@ def analyze_image_with_ocr(filepath):
 
 def clean_text_for_query(text):
     return ' '.join(word for word in text.split() if word.isalnum() and len(word) > 3)
+# OCR kontrol kısmı
 
 # Places API ile yer bilgisi almak için burada…
 
