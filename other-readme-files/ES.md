@@ -62,9 +62,14 @@ Se requieren las siguientes librerías para este proyecto:
    cd places-api-project
    ```
 
-3. Instala las dependencias:
+2. Instala las dependencias:
    ```bash
    pip install -r requirements.txt
+   ```
+
+3. Instala el modelo en_core_web_sm:
+   ```bash
+   python -m spacy download en_core_web_sm
    ```
 
 4. Configura tus credenciales de Google Cloud:
@@ -115,11 +120,7 @@ Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE)
 
 ---
 
-## Contribuciones
-
-¡Las contribuciones son bienvenidas! Siéntete libre de hacer un fork del repositorio, crear una rama para nuevas funciones y enviar un pull request.
-
 ## Ejemplo
-![KonumifyFoto](https://i.ibb.co/mFTBnfm/GUELL.jpg)
-![KonumifyIndex](https://i.ibb.co/YcvdcZf/1-es.png)
-![KonumifyResultado](https://i.ibb.co/0nW2XsZ/2-es.png)
+![KonumifyFoto](https://i.imgur.com/9oRQfUv.jpeg)
+![KonumifyIndex](https://i.imgur.com/UkWUWgQ.png)
+![KonumifyResultado](https://i.imgur.com/FPiHZQM.png)
