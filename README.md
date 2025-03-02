@@ -128,3 +128,4 @@ Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için [LICENSE](L
 ![KonumifyFotograf](https://i.imgur.com/Hkfhnqv.jpeg)
 ![KonumifyIndex](https://i.imgur.com/ZVxcw74.png)
 ![KonumifySonuc](https://i.imgur.com/E3niPzb.png)
+![KonumifyHarita](https://i.imgur.com/iOFHPbK.png)
