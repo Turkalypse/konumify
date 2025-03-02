@@ -37,7 +37,8 @@ Deze repository bevat twee versies van een Flask-applicatie die Google Cloud-ser
   - [Nieuwe versie](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Voor reverse geocodering van coördinaten naar adressen.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Voor het genereren van satellietkaartbeelden.
-- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): Voor zoekopdrachten op basis van trefwoorden.
+- [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): Voor zoekopdrachten op basis van trefwoorden.
+  - Zoekmachine-ID voor nodig (dus de CX-waarde). "Afbeeldingen zoeken" en "Het hele web doorzoeken" moeten ingeschakeld zijn. "Regio" wordt aanbevolen voor je eigen land.
 
 ### Python-bibliotheken
 
@@ -75,11 +76,12 @@ De volgende bibliotheken zijn vereist voor dit project:
 4. Stel je Google Cloud-referenties in:
    - Maak een `.env`-bestand in de projectmap met de volgende sleutels:
      ```env
-     FLASK_SECRET_KEY=UW_GEHEIME_SLEUTEL # Maak een met flask_secret_key_maker.py
+     FLASK_SECRET_KEY=UW-GEHEIME-SLEUTEL # Maak een met flask_secret_key_maker.py
      GOOGLE_APPLICATION_CREDENTIALS=json-bestands-naam.json
-     GEOCODING_API_KEY=API_KEY
+     GEOCODING_API_KEY=UW-API-KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # Gelijk aan GEOCODING_API_KEY
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # Gelijk aan GEOCODING_API_KEY
+     CUSTOM_SEARCH_ENGINE_ID=uw-zoekmachine-id
      ```
 
 ---
