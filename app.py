@@ -8,8 +8,8 @@ from flask import Flask, render_template, request, session, redirect
 from flask_babel import Babel, _
 from werkzeug.utils import secure_filename
 from google.cloud import vision
-from PIL import Image
-from PIL.ExifTags import TAGS
+from PIL import Image, ExifTags
+from PIL.ExifTags import TAGS, GPSTAGS
 from collections import Counter
 from dotenv import load_dotenv
 
@@ -89,6 +89,9 @@ def index():
             exif_data = extract_exif(filepath)
             if exif_data:
                 print("\033[92mEXIF yöntemi ile bulundu\033[0m")
+                satellite_image_url = get_satellite_image_url(exif_data['latitude'], exif_data['longitude'])
+                return render_template('sonuc.html', place_info=exif_data, satellite_image_url=satellite_image_url)
+                print("\033[94mEXIF dönüş değeri:\033[0m {exif_data}")
                 return render_template('sonuc.html', place_info=exif_data)
             else:
                 print("\033[93mEXIF verisi bulunamadı, diğer yöntemlere geçiliyor…\033[0m")
@@ -123,6 +126,8 @@ def index():
                 vision_data_web = analyze_image_with_web_detection(filepath)
                 if 'error' not in vision_data_web:
                     top_keywords = extract_top_keywords(vision_data_web)
+                    if not top_keywords or len(top_keywords) < 3:
+                        top_keywords = [("Bilinmiyor", 0)] * 3
                     search_results = search_with_keywords(top_keywords)
                     return render_template('bulunamadi.html', top_keywords=top_keywords, search_results=search_results)
                 else:
@@ -138,62 +143,105 @@ def index():
 
     return render_template('index.html')
 
+# EXIF kısmı
 
-# EXIF verilerini çekme
+def get_exif_data(image_path):
+    img = Image.open(image_path)
+    exif_data = img._getexif()
+    if not exif_data:
+        return None
+
+    gps_info = {}
+    for tag, value in exif_data.items():
+        tag_name = TAGS.get(tag, tag)
+        if tag_name == "GPSInfo":
+            for key in value.keys():
+                sub_tag = GPSTAGS.get(key, key)
+                gps_info[sub_tag] = value[key]
+
+    return gps_info
+
+def convert_to_degrees(value):
+    d, m, s = value
+    return d + (m / 60.0) + (s / 3600.0)
+
 def extract_exif(filepath):
     try:
         image = Image.open(filepath)
         exif_data = image._getexif()
-        if exif_data:
-            gps_info = {}
-            for tag, value in exif_data.items():
-                tag_name = TAGS.get(tag, tag)
-                if tag_name == 'GPSInfo':
-                    gps_info = value
-            if gps_info:
-                lat, lng = get_coordinates(gps_info)
-                if lat and lng:
-                    address = get_address_from_coordinates(lat, lng)
-                    if address:
-                        return {
-                            'description': 'EXIF GPS verisi bulundu.',
-                            'latitude': lat,
-                            'longitude': lng,
-                            'address': address
-                        }
-        print("\033[93mEXIF verisi eksik bilgi nedeniyle başarısız.\033[0m")
-        return None
+        
+        if not exif_data:
+            print("\033[91mEXIF verisi bulunamadı.\033[0m")
+            return None
+        
+        exif = {ExifTags.TAGS.get(tag, tag): value for tag, value in exif_data.items() if tag in ExifTags.TAGS}
+        
+        gps_info = exif.get("GPSInfo")
+        print(f"\033[94mGPSInfo içeriği:\033[0m {gps_info}")
+        
+        if gps_info:
+            coordinates = get_coordinates(gps_info)
+            print(f"\033[92mEXIF koordinatları bulundu:\033[0m {coordinates}")
+            
+            if coordinates:
+                address = get_address_from_coordinates(coordinates[0], coordinates[1])
+                return {
+                    'description': address,
+                    'latitude': coordinates[0],
+                    'longitude': coordinates[1],
+                    'address': address
+                }
+        else:
+            print("\033[93mGPSInfo bulunamadı.\033[0m")
+            return None
     except Exception as e:
-        print(f"EXIF okuma hatası: {e}")
+        print(f"\033[91mEXIF verileri okunamadı: {e}\033[0m")
         return None
+        
+# EXIF kısmı
 
 # Koordinatların alımı
 def get_coordinates(gps_info):
-    def convert_to_degrees(value):
-        d = value[0][0] / value[0][1]
-        m = value[1][0] / value[1][1]
-        s = value[2][0] / value[2][1]
-        return d + (m / 60.0) + (s / 3600.0)
+    if gps_info is None:
+        return None
 
-    try:
-        lat = convert_to_degrees(gps_info[2])
-        if gps_info[1] == 'S':
-            lat = -lat
-        lng = convert_to_degrees(gps_info[4])
-        if gps_info[3] == 'W':
-            lng = -lng
-        return lat, lng
-    except KeyError:
-        return None, None
+    gps_latitude = gps_info.get(2)  # GPSLatitude
+    gps_latitude_ref = gps_info.get(1)  # N veya S
+    gps_longitude = gps_info.get(4)  # GPSLongitude
+    gps_longitude_ref = gps_info.get(3)  # E veya W
+
+    if not gps_latitude or not gps_longitude:
+        return None
+
+    lat = convert_to_degrees(gps_latitude)
+    lon = convert_to_degrees(gps_longitude)
+
+    # Byte olarak gelebilir, stringe çevir
+    if isinstance(gps_latitude_ref, bytes):
+        gps_latitude_ref = gps_latitude_ref.decode()
+    if isinstance(gps_longitude_ref, bytes):
+        gps_longitude_ref = gps_longitude_ref.decode()
+
+    # Güney (S) veya Batı (W) ise negatif yap
+    if gps_latitude_ref == 'S':
+        lat = -lat
+    if gps_longitude_ref == 'W':
+        lon = -lon
+
+    return lat, lon
 
 # Adresin alımı
 def get_address_from_coordinates(lat, lng):
     try:
         geocoding_url = f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={GEOCODING_API_KEY}"
-        geocoding_response = requests.get(geocoding_url).json()
-        return geocoding_response['results'][0]['formatted_address'] if geocoding_response['results'] else "Adres bulunamadı"
+        response = requests.get(geocoding_url).json()
+
+        if response.get('results'):
+            return response['results'][0]['formatted_address']
+        else:
+            return "Adres bulunamadı"
     except Exception as e:
-        print(f"Geocoding hatası: {e}")
+        print(f"\033[91mGeocoding API hatası:\033[0m {e}")
         return "Adres alınamadı"
 
 # Google Maps Static API ile uydu görüntüsü
