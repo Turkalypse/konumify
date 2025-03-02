@@ -37,7 +37,8 @@
   - [新規](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`。
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): 座標から住所を逆コード化するために使用します。
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): サテライトマップ画像を作成するために使用します。
-- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): キーワードを使用したウェブ検索用。
+- [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): キーワードを使用したウェブ検索用。
+  - 検索エンジン ID が必要です（つまり CX 値）。「画像検索」と「ウェブ全体を検索」を有効にしてください。「地域」にはご自身の国を推奨します。
 
 ### Python ライブラリ
 
@@ -75,11 +76,12 @@
 4. Google Cloud の証明情報を構築します:
    - プロジェクトディレクトリに `.env` ファイルを作成し、以下のキーを記入します:
      ```env
-     FLASK_SECRET_KEY=YOUR_SECRET_KEY # flask_secret_key_maker.py で作成
+     FLASK_SECRET_KEY=YOUR-SECRET-KEY # flask_secret_key_maker.py で作成
      GOOGLE_APPLICATION_CREDENTIALS=json-file-name.json
-     GEOCODING_API_KEY=API_KEY
+     GEOCODING_API_KEY=YOUR-API-KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # GEOCODING_API_KEY と同じ
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # GEOCODING_API_KEY と同じ
+     CUSTOM_SEARCH_ENGINE_ID=あなたの検索エンジン-ID
      ```
 
 ---
