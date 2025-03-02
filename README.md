@@ -78,12 +78,12 @@ Bu projede aşağıdaki kütüphaneler gereklidir:
 4. Google Cloud kimlik bilgilerinizi ayarlayın:
    - Proje dizininde `.env` dosyasındaki aşağıdaki gerekli yerleri düzenleyin:
      ```env
-     FLASK_SECRET_KEY=GİZLİ_ANAHTAR # flask_secret_key_maker.py dosyasıyla bir tane oluşturun
+     FLASK_SECRET_KEY=GİZLİ-ANAHTAR # flask_secret_key_maker.py dosyasıyla bir tane oluşturun
      GOOGLE_APPLICATION_CREDENTIALS=json-dosya-adi.json
-     GEOCODING_API_KEY=API_ANAHTARI
+     GEOCODING_API_KEY=API-ANAHTARINIZ
      PLACES_API_KEY=${GEOCODING_API_KEY} # GEOCODING_API_KEY ile aynıdır
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # GEOCODING_API_KEY ile aynıdır
-     CUSTOM_SEARCH_ENGINE_ID=arama_motoru_kimliği
+     CUSTOM_SEARCH_ENGINE_ID=arama_motoru_kimliğiniz
      ```
 
 ---
