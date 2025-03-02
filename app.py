@@ -28,6 +28,7 @@ VISION_CLIENT = vision.ImageAnnotatorClient()
 GEOCODING_API_KEY = os.getenv('GEOCODING_API_KEY')
 PLACES_API_KEY = os.getenv('PLACES_API_KEY')
 CUSTOM_SEARCH_JSON_API = os.getenv('CUSTOM_SEARCH_JSON_API')
+CUSTOM_SEARCH_ENGINE_ID = os.getenv('CUSTOM_SEARCH_ENGINE_ID')
 
 # Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır
 UPLOAD_FOLDER = 'uploads'
@@ -427,7 +428,7 @@ def search_with_keywords(keywords):
             search_url = "https://www.googleapis.com/customsearch/v1"
             params = {
                 'q': keyword,
-                'cx': 'e206f5e2b59f44772',  # Custom Search Engine ID
+                'cx': CUSTOM_SEARCH_ENGINE_ID,  # Custom Search Engine ID
                 'key': CUSTOM_SEARCH_JSON_API,
                 'lr': 'lang_tr',
                 'siteSearch': 'tr'
