@@ -62,9 +62,14 @@
    cd places-api-project
    ```
 
-3. Установите зависимости:
+2. Установите зависимости:
    ```bash
    pip install -r requirements.txt
+   ```
+
+3. Установите модель en_core_web_sm:
+   ```bash
+   python -m spacy download en_core_web_sm
    ```
 
 4. Настройте учетные данные Google Cloud:
@@ -115,11 +120,7 @@ places-api-project/
 
 ---
 
-## Вклад
-
-Приветствуются любые вклады! Не стесняйтесь форкнуть репозиторий, создать ветку для новой функции и отправить pull request.
-
 ## Пример
-![ФотографияKonumify](https://i.ibb.co/R7srhNY/REDSQ.jpg)
-![KonumifyIndex](https://i.ibb.co/dpnTRRh/1-ru.png)
-![РезультатKonumify](https://i.ibb.co/NyYfvMF/2-ru.png)
+![ФотографияKonumify](https://i.imgur.com/wTN2eMo.jpeg)
+![KonumifyIndex](https://i.imgur.com/LjqiA2Q.png)
+![РезультатKonumify](https://i.imgur.com/2Pnj5Or.png)
