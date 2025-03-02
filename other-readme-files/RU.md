@@ -37,7 +37,8 @@
   - [новый версия](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`.
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Для обратного геокодирования координат в адреса.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Для создания спутниковых изображений карт.
-- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): Для поиска в интернете по ключевым словам.
+- [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): Для поиска в интернете по ключевым словам.
+  - Для идентификатора поисковой системы (то есть значения CX). Должны быть включены "Поиск изображений" и "Поиск во всем интернете". Для "Регион" рекомендуется выбрать вашу страну.
 
 ### Библиотеки Python
 
@@ -75,11 +76,12 @@
 4. Настройте учетные данные Google Cloud:
    - Создайте файл `.env` в каталоге проекта с следующими ключами:
      ```env
-     FLASK_SECRET_KEY=ВАШ_СЕКРЕТНЫЙ_КЛЮЧ # Создайте с помощью flask_secret_key_maker.py
+     FLASK_SECRET_KEY=ВАШ-СЕКРЕТНЫЙ-КЛЮЧ # Создайте с помощью flask_secret_key_maker.py
      GOOGLE_APPLICATION_CREDENTIALS=json-файл-имя.json
-     GEOCODING_API_KEY=API_KEY
+     GEOCODING_API_KEY=ВАШ-API-KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # Совпадает с GEOCODING_API_KEY
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # Совпадает с GEOCODING_API_KEY
+     CUSTOM_SEARCH_ENGINE_ID=ВАШ-идентификатор-поисковой-системы
      ```
 
 ---
