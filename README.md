@@ -39,7 +39,8 @@ Bu depo, Google Cloud hizmetlerini kullanarak görsel dosyalarını analiz eden 
   - `appv2.py` [yeni sürüm](https://developers.google.com/maps/documentation/places/web-service/op-overview).
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): Koordinatları adreslere dönüştürmek için.
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): Uydu haritaları oluşturmak için.
-- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): Anahtar kelime tabanlı web aramaları için.
+- [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): Anahtar kelime tabanlı web aramaları için.
+  - Arama motoru kimliği için lazım (yani CX değeri). "Resim arama" ve "Tüm web'de ara" açık olmalı. "Bölge", Türkiye tavsiye edilir.
 
 ### Python Kütüphaneleri
 
@@ -82,6 +83,7 @@ Bu projede aşağıdaki kütüphaneler gereklidir:
      GEOCODING_API_KEY=API_ANAHTARI
      PLACES_API_KEY=${GEOCODING_API_KEY} # GEOCODING_API_KEY ile aynıdır
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # GEOCODING_API_KEY ile aynıdır
+     CUSTOM_SEARCH_ENGINE_ID=arama_motoru_kimliği
      ```
 
 ---
