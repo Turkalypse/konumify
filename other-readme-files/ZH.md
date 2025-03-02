@@ -62,9 +62,14 @@
    cd places-api-project
    ```
 
-3. 安装依赖项：
+2. 安装依赖项：
    ```bash
    pip install -r requirements.txt
+   ```
+
+3. 安装 en_core_web_sm 模型:
+   ```bash
+   python -m spacy download en_core_web_sm
    ```
 
 4. 设置 Google Cloud 凭资凭证：
@@ -115,11 +120,7 @@ places-api-project/
 
 ---
 
-## 贡献
-
-欢迎贡献！您可以分支仓库，创建新功能分支，并提交一个拓展请求。
-
 ## 示例
-![Konumify照片](https://i.ibb.co/MnttvPy/FCITY.jpg)
-![KonumifyIndex](https://i.ibb.co/T0q3KJ0/1-zh.png)
-![Konumify结果](https://i.ibb.co/Btdntn3/2-zh.png)
+![Konumify照片](https://i.imgur.com/BIvAe3F.jpeg)
+![KonumifyIndex](https://i.imgur.com/58vIn6K.png)
+![Konumify结果](https://i.imgur.com/D5uTudX.png)
