@@ -30,12 +30,10 @@ PLACES_API_KEY = os.getenv('PLACES_API_KEY')
 CUSTOM_SEARCH_JSON_API = os.getenv('CUSTOM_SEARCH_JSON_API')
 CUSTOM_SEARCH_ENGINE_ID = os.getenv('CUSTOM_SEARCH_ENGINE_ID')
 
-# Yüklenen fotoğraflar geçici olarak 'uploads' klasörüne (otomatik oluşturulur) kopyalanır
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Çoklu dil desteği
 LANGUAGES = {
     'tr': 'Türkçe',
     'en': 'English',
@@ -68,7 +66,6 @@ def set_language():
         session['lang'] = language
     print("Session güncellendi:", session)
     return redirect(request.referrer)
-# Çoklu dil desteği
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -86,7 +83,6 @@ def index():
         file.save(filepath)
 
         try:
-            # 1. EXIF verilerinin kontrolü
             exif_data = extract_exif(filepath)
             if exif_data:
                 print("\033[92mEXIF yöntemi ile bulundu\033[0m")
@@ -97,9 +93,8 @@ def index():
             else:
                 print("\033[93mEXIF verisi bulunamadı, diğer yöntemlere geçiliyor…\033[0m")
 
-            # 2.1. OCR ile metin algılama ve yer bilgisi bulma
             ocr_data = analyze_image_with_ocr(filepath)
-            if ocr_data:  # OCR sonucu geçerli ise
+            if ocr_data:
                 place_details = get_place_details(ocr_data['cleaned_text'], PLACES_API_KEY)
                 if 'place_id' in place_details:
                     detailed_place = get_place_details_from_id(place_details['place_id'], PLACES_API_KEY)
@@ -112,7 +107,6 @@ def index():
             else:
                 print("\033[93mOCR ile yeterli metin algılanamadı, diğer yöntemlere geçiliyor...\033[0m")
 
-            # 3. Vision API ile analiz
             vision_data = analyze_image(filepath)
             if 'error' not in vision_data and all(vision_data.get(key) is not None for key in ('latitude', 'longitude', 'address')):
                 print("\033[92mVision API yöntemi ile bulundu\033[0m")
@@ -121,7 +115,6 @@ def index():
             else:
                 print("\033[93mVision API ile yer bulma başarısız. Diğer yöntemlere geçiliyor...\033[0m")
 
-            # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
             if any(vision_data.get(key) is None for key in ('description', 'latitude', 'longitude', 'address')):
                 print("\033[93mSonuçlar yetersiz, Web Detection işleme geçiliyor.\033[0m")
                 vision_data_web = analyze_image_with_web_detection(filepath)
@@ -133,13 +126,11 @@ def index():
                     return render_template('bulunamadi.html', top_keywords=top_keywords, search_results=search_results)
                 else:
                     print("\033[93mWeb Detection başarısız.\033[0m")
-            # YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
             print("\033[93mAnaliz tamamlandı ancak sonuç bulunamadı. Daha sade veya spesifik bir metin kullanmayı deneyin.\033[0m")
 
         finally:
             if os.path.exists(filepath):
-                # Yüklenen fotoğraflar analiz tamamlanınca yer kaplamamak için silinir.
                 os.remove(filepath)
 
     return render_template('index.html')
@@ -201,15 +192,14 @@ def extract_exif(filepath):
         
 # EXIF kısmı
 
-# Koordinatların alımı
 def get_coordinates(gps_info):
     if gps_info is None:
         return None
 
-    gps_latitude = gps_info.get(2)  # GPSLatitude
-    gps_latitude_ref = gps_info.get(1)  # N veya S
-    gps_longitude = gps_info.get(4)  # GPSLongitude
-    gps_longitude_ref = gps_info.get(3)  # E veya W
+    gps_latitude = gps_info.get(2)
+    gps_latitude_ref = gps_info.get(1)
+    gps_longitude = gps_info.get(4)
+    gps_longitude_ref = gps_info.get(3)
 
     if not gps_latitude or not gps_longitude:
         return None
@@ -217,13 +207,11 @@ def get_coordinates(gps_info):
     lat = convert_to_degrees(gps_latitude)
     lon = convert_to_degrees(gps_longitude)
 
-    # Byte olarak gelebilir, stringe çevir
     if isinstance(gps_latitude_ref, bytes):
         gps_latitude_ref = gps_latitude_ref.decode()
     if isinstance(gps_longitude_ref, bytes):
         gps_longitude_ref = gps_longitude_ref.decode()
 
-    # Güney (S) veya Batı (W) ise negatif yap
     if gps_latitude_ref == 'S':
         lat = -lat
     if gps_longitude_ref == 'W':
@@ -231,7 +219,6 @@ def get_coordinates(gps_info):
 
     return lat, lon
 
-# Adresin alımı
 def get_address_from_coordinates(lat, lng):
     try:
         geocoding_url = f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={GEOCODING_API_KEY}"
@@ -245,7 +232,6 @@ def get_address_from_coordinates(lat, lng):
         print(f"\033[91mGeocoding API hatası:\033[0m {e}")
         return "Adres alınamadı"
 
-# Google Maps Static API ile uydu görüntüsü
 def get_satellite_image_url(lat, lng):
     static_map_url = "https://maps.googleapis.com/maps/api/staticmap?"
     params = {
@@ -258,7 +244,6 @@ def get_satellite_image_url(lat, lng):
     response = f"{static_map_url}{requests.compat.urlencode(params)}"
     return response
 
-# Vision API ile resim analizi
 def analyze_image(filepath):
     try:
         with io.open(filepath, 'rb') as image_file:
@@ -323,14 +308,12 @@ def analyze_image(filepath):
         print(f"\033[91mVision API hatası:\033[0m {e}")
         return {'error': 'Vision API ile analiz edilemedi'}
 
-# YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 def analyze_image_with_web_detection(filepath):
     try:
         with io.open(filepath, 'rb') as image_file:
             content = image_file.read()
         image = vision.Image(content=content)
 
-        # Web Detection
         response = VISION_CLIENT.web_detection(image=image)
         web_detection = response.web_detection
         print("\033[94mWeb Detection Response:\033[0m", response)
@@ -338,7 +321,6 @@ def analyze_image_with_web_detection(filepath):
         if web_detection:
             print("\033[92mWeb Detection Başarılı\033[0m")
 
-            # full_matching_images, partial_matching_images ve pages_with_matching_images verilerini çıkar
             web_data = {
                 'full_matching_images': [image.url for image in web_detection.full_matching_images],
                 'partial_matching_images': [image.url for image in web_detection.partial_matching_images],
@@ -366,13 +348,10 @@ def extract_top_keywords(web_data):
 
     word_counts_per_source = {}
 
-    # Helper function: Metni analiz et ve kelime sayımı yap
     def analyze_text(source, text, category):
-        # Metni temizle: Noktalama, sayılar ve özel karakterler kaldır
-        clean_text = re.sub(r'[^\w\s]', ' ', text)  # Özel karakterleri kaldır
-        clean_text = re.sub(r'\b\d+\b', '', clean_text)  # Tamamen sayılardan oluşan ifadeleri kaldır
+        clean_text = re.sub(r'[^\w\s]', ' ', text)
+        clean_text = re.sub(r'\b\d+\b', '', clean_text)
         
-        # Kelimeleri filtrele
         words = [word.lower() for word in clean_text.split() 
                  if len(word) > 2 and word.lower() not in ignore_list]
         
@@ -380,35 +359,30 @@ def extract_top_keywords(web_data):
             word_counts_per_source[source] = {'URL': Counter(), 'page_title': Counter()}
         word_counts_per_source[source][category].update(words)
 
-    # FULL_MATCHING_IMAGES - URL'ler
     if 'full_matching_images' in web_data:
         source_name = 'full_matching_images'
         for url in web_data[source_name]:
             analyze_text(source_name, url, 'URL')
 
-    # PARTIAL_MATCHING_IMAGES - URL'ler
     if 'partial_matching_images' in web_data:
         source_name = 'partial_matching_images'
         for url in web_data[source_name]:
             analyze_text(source_name, url, 'URL')
 
-    # PAGES_WITH_MATCHING_IMAGES - URL'ler ve PAGE_TITLE'lar
     if 'pages_with_matching_images' in web_data:
         source_name = 'pages_with_matching_images'
         for page in web_data[source_name]:
             analyze_text(source_name, page['url'], 'URL')
             analyze_text(source_name, page['title'], 'page_title')
 
-    # Detaylı çıktılar: Kaynaklara göre kelime sayımları
     print("\n\033[94mKaynaklara Göre Kelime Sayımları (URL ve Page Title Ayrımı):\033[0m")
     for source, categories in word_counts_per_source.items():
         print(f"\n\033[92m{source}:\033[0m")
         for category, counts in categories.items():
             print(f"  \033[93m{category}:\033[0m")
-            for word, count in counts.most_common(5):  # İlk 5 kelime
+            for word, count in counts.most_common(5):
                 print(f"    {word}: {count}")
 
-    # Genel toplam: Tüm kaynaklardan en sık geçen 3 kelime
     total_word_counts = Counter()
     for categories in word_counts_per_source.values():
         for counts in categories.values():
@@ -423,19 +397,18 @@ def extract_top_keywords(web_data):
 def search_with_keywords(keywords):
     results = []
     try:
-        for keyword, _ in keywords:  # En çok geçen 3 kelimeyi alıyoruz
+        for keyword, _ in keywords:
             print(f"\n\033[94m'{keyword}' kelimesi Google'da aratılıyor...\033[0m")
             search_url = "https://www.googleapis.com/customsearch/v1"
             params = {
                 'q': keyword,
-                'cx': CUSTOM_SEARCH_ENGINE_ID,  # Custom Search Engine ID
+                'cx': CUSTOM_SEARCH_ENGINE_ID,
                 'key': CUSTOM_SEARCH_JSON_API,
                 'lr': 'lang_tr',
                 'siteSearch': 'tr'
             }
             response = requests.get(search_url, params=params)
 
-            # HTTP Hatası kontrolü
             if response.status_code != 200:
                 print(f"\033[91mHata: HTTP {response.status_code}\033[0m")
                 if response.status_code == 403:
@@ -451,7 +424,7 @@ def search_with_keywords(keywords):
 
             if 'items' in json_response:
                 print(f"\033[93m'{keyword}' için bulunan ilk 3 başlık:\033[0m")
-                for item in json_response['items'][:3]:  # İlk 3 sonucu al
+                for item in json_response['items'][:3]:
                     title = item['title']
                     link = item['link']
                     print(f"  - \033[96mBaşlık:\033[0m {title}")
@@ -465,7 +438,6 @@ def search_with_keywords(keywords):
     except Exception as e:
         print(f"\033[91mGoogle Search API hatası:\033[0m {e}")
     return results
-# YENİ: Eğer Web Detection da yetersiz olursa görselden kaynaklara inilsin
 
 def get_coordinates_from_description(description):
     """Description kullanarak Google Maps Geocoding API'den koordinat ve adres alır."""
@@ -488,6 +460,7 @@ def get_coordinates_from_description(description):
         return None
 
 # OCR kontrol kısmı
+
 def is_valid_text(text):
     if re.match(r'^\d+$', text):
         return False
@@ -506,22 +479,17 @@ def analyze_image_with_ocr(filepath):
         if texts:
             detected_text = texts[0].description.strip()
             
-            # Eğer algılanan metin 3 veya daha az karakter uzunluğundaysa, geçersiz kabul etme
             if len(detected_text) <= 3 or not is_valid_text(detected_text):
                 print("\033[93mGeçersiz metin tespit edildi, geçiliyor...\033[0m")
-                return None  # İşlem burada kesilmez, çağıran fonksiyon diğer yönteme geçer
+                return None
             
-            # NLP uygulama
             doc = nlp(detected_text)
 
-            # Temizleme işlemleri (bu adımda kısa kelimeleri filtreler)
             cleaned_text = clean_text_for_query(detected_text)
 
-            # Varlık tanıma, ancak kısa kelimeleri (3 karakterden az) filtreleyelim
             entities = [(ent.text, ent.label_) for ent in doc.ents if len(ent.text) > 3 and not ent.text.isdigit()]
             print("\033[92mVarlıklar:\033[0m", entities)
 
-            # Anahtar kelimeleri bulma ve 3 veya daha az karakterli kelimeleri filtreleme
             keywords = {token.lemma_ for token in doc if token.is_alpha and not token.is_stop and len(token.lemma_) > 3}
             print("\033[92mAnahtar Kelimeler:\033[0m", keywords)
 
@@ -535,9 +503,8 @@ def analyze_image_with_ocr(filepath):
 
 def clean_text_for_query(text):
     return ' '.join(word for word in text.split() if word.isalnum() and len(word) > 3)
+	
 # OCR kontrol kısmı
-
-# Places API ile yer bilgisi almak için burada…
 
 def get_place_details(query, api_key):
     """Metin sorgusundan yer detaylarını alır."""
