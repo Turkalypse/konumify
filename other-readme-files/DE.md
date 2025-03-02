@@ -59,8 +59,8 @@ Die folgenden Bibliotheken sind für dieses Projekt erforderlich:
 
 1. Klonen Sie das Repository:
    ```bash
-   git clone https://github.com/yourusername/places-api-project.git
-   cd places-api-project
+   git clone https://github.com/Turkalypse/konumify
+   cd konumify
    ```
 
 2. Installieren Sie die Abhängigkeiten:
