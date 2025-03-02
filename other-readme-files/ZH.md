@@ -37,7 +37,8 @@
   - [新版](https://developers.google.com/maps/documentation/places/web-service/op-overview) `appv2.py`。
 - [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding): 用于将坐标反向解释为地址。
 - [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static): 用于生成卫星地图图像。
-- [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction): 用于基于关键词的网络搜索。
+- [Google Custom Engine ID](https://programmablesearchengine.google.com/controlpanel/all): 用于基于关键词的网络搜索。
+  - 需要搜索引擎 ID（即 CX 值）。必须启用“图片搜索”和“在整个网络中搜索”。建议选择“区域”为土耳其。
 
 ### 必需的 Python 库
 
@@ -80,6 +81,7 @@
      GEOCODING_API_KEY=API_KEY
      PLACES_API_KEY=${GEOCODING_API_KEY} # 与 GEOCODING_API_KEY 相同
      CUSTOM_SEARCH_JSON_API=${GEOCODING_API_KEY} # 与 GEOCODING_API_KEY 相同
+     CUSTOM_SEARCH_ENGINE_ID=您的搜索引擎-ID
      ```
 
 ---
