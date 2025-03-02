@@ -12,7 +12,9 @@
         {% if place_info.error %}
             <p style="color: red;">{{ place_info.error }}</p>
         {% else %}
-            <p><strong>{{ _('Yer:') }}</strong> {{ place_info.description }}</p>
+            {% if place_info.description != place_info.address %}
+			<p><strong>{{ _('Yer:') }}</strong> {{ place_info.description }}</p>
+			{% endif %}
             <p><strong>{{ _('Enlem:') }}</strong> {{ place_info.latitude }}</p>
             <p><strong>{{ _('Boylam:') }}</strong> {{ place_info.longitude }}</p>
             <p><strong>{{ _('Adres:') }}</strong> {{ place_info.address }}</p>
